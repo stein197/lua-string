@@ -55,8 +55,18 @@ end
 
 -- Trims string's characters from its endings. Trims whitespaces by default
 function string.trim(self, chars)
-	local chars = chars or "%s"
-	return self:gsub("^["..chars.."]+", ""):gsub("["..chars.."]+$", "")
+	chars = chars or "%s"
+	return self:ltrim(chars):rtrim(chars)
+end
+
+-- Trims string's characters from its left side. Trims whitespaces by default
+function string.ltrim(self, chars)
+	return self:gsub("^["..(chars or "%s").."]+", "")
+end
+
+-- Trims string's characters from its right side. Trims whitespaces by default
+function string.rtrim(self, chars)
+	return self:gsub("["..(chars or "%s").."]+$", "")
 end
 
 -- Pads string at the start with specified char until specified length. " " pad char by default

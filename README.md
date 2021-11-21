@@ -6,6 +6,8 @@ Table of contents
 	- [split](#split)
 	- [splitregex](#splitregex)
 	- [trim](#trim)
+	- [ltrim](#ltrim)
+	- [rtrim](#rtrim)
 	- [padstart](#padstart)
 	- [padend](#padend)
 	- [esc](#esc)
@@ -46,6 +48,22 @@ Trims string's characters from its endings. Trims whitespaces by default
 ```lua
 (" abc "):trim() -- "abc"
 (" /abc/"):trim("/ ") -- "abc"
+```
+
+<a id="ltrim"></a>
+
+### ltrim(self, chars)
+Trims string's characters from its left side. Trims whitespaces by default
+```lua
+(" abc "):ltrim() -- "abc "
+```
+
+<a id="rtrim"></a>
+
+### rtrim(self, chars)
+Trims string's characters from its right side. Trims whitespaces by default
+```lua
+(" abc "):ltrim() -- " abc"
 ```
 
 <a id="padstart"></a>

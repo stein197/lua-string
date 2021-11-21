@@ -26,6 +26,20 @@ TestString = {
 		luaunit.assertEquals(("abcba"):trim("a"), "bcb")
 	end;
 
+	["test: ltrim()"] = function ()
+		luaunit.assertEquals((""):ltrim(), "")
+		luaunit.assertEquals((" "):ltrim(), "")
+		luaunit.assertEquals((" a "):ltrim(), "a ")
+		luaunit.assertEquals(("aba"):ltrim("a"), "ba")
+	end;
+
+	["test: rtrim()"] = function ()
+		luaunit.assertEquals((""):rtrim(), "")
+		luaunit.assertEquals((" "):rtrim(), "")
+		luaunit.assertEquals((" a "):rtrim(), " a")
+		luaunit.assertEquals(("aba"):rtrim("a"), "ab")
+	end;
+
 	["test: padstart()"] = function ()
 		luaunit.assertEquals((""):padstart(3, "0"), "000")
 		luaunit.assertEquals(("1"):padstart(3, "0"), "001")
