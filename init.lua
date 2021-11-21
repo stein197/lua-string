@@ -42,6 +42,9 @@ end
 
 -- Splits string by supplied regular expression string
 function string.splitregex(self, regex)
+	if regex == "" then
+		return self:totable()
+	end
 	local result = {}
 	local previdx = 1
 	for match in self:gmatch(regex) do
