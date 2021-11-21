@@ -10,6 +10,8 @@ Table of contents
 	- [padend](#padend)
 	- [esc](#esc)
 	- [unesc](#unesc)
+	- [esc](#escregex)
+	- [unesc](#unescregex)
 	- [iter](#iter)
 	- [truncate](#truncate)
 	- [startswith](#startswith)
@@ -65,18 +67,37 @@ Pads string at the end with specified char until specified length. " " pad char 
 <a id="esc"></a>
 
 ### esc(self)
-Adds backslashes before ", ' and \ characters
+Adds backslashes before ", ' and \ characters. Escape character can be specified ("\\" by default) as well as characters to escape ({"\"", "'", "\\"} by default)
 ```lua
 ("abc'"):esc() -- "abc\\'"
+("abc#"):esc("%", {"#"}) -- "abc%#"
 ```
 
 <a id="unesc"></a>
 
 ### unesc(self)
-Strips backslashes from the string
+Strips backslashes from the string. Escape character can be specified ("\\" by default)
 ```lua
 ("abc\\'"):unesc() -- "abc'"
+("%%abc"):unesc("%") -- "%abc"
 ```
+
+<a id="escregex"></a>
+
+### escregex(self)
+Escapes regexp special characters so the can be used in regexp function as is
+```lua
+("%a[abc]"):escregex() -- "%%a%[abc%]"
+```
+
+<a id="unescregex"></a>
+
+### unescregex(self)
+Unescapes regexp special characters
+```lua
+("%%a%[abc%]"):unescregex() -- "%a[abc]"
+```
+
 
 <a id="iter"></a>
 

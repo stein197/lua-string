@@ -8,6 +8,9 @@ local boolvalues = {
 local eschars = {
 	"\"", "'", "\\"
 }
+local escregexchars = {
+	"(", ")", ".", "%", "+", "-", "*", "?", "[", "]", "^", "$"
+}
 
 local function includes(tbl, item)
 	for k, v in pairs(tbl) do
@@ -76,22 +79,26 @@ function string.padend(self, len, char)
 	return self..char:rep(charsmount)
 end
 
--- Adds backslashes before ", ' and \ characters
-function string.esc(self)
+-- Adds backslashes before ", ' and \ characters. Escape character can be specified ("\\" by default) as well as
+-- characters to escape ({"\"", "'", "\\"} by default)
+function string.esc(self, eschar, eschartbl)
 	local result = ""
+	eschar = eschar or "\\"
+	eschartbl = eschartbl or eschars
 	for char in self:iter() do
-		result = includes(eschars, char) and result.."\\"..char or result..char
+		result = includes(eschartbl, char) and result..eschar..char or result..char
 	end
 	return result
 end
 
--- Strips backslashes from the string
-function string.unesc(self)
+-- Strips backslashes from the string. Escape character can be specified ("\\" by default)
+function string.unesc(self, eschar)
 	local result = ""
 	local i = 0
+	eschar = eschar or "\\"
 	while i <= #self do
 		local char = self:sub(i, i)
-		if char == "\\" then
+		if char == eschar then
 			i = i + 1
 			result = result..self:sub(i, i)
 		else
@@ -100,6 +107,16 @@ function string.unesc(self)
 		i = i + 1
 	end
 	return result
+end
+
+-- Escapes regexp special characters so the can be used in regexp function as is
+function string.escregex(self)
+	return self:esc("%", escregexchars)
+end
+
+-- Unescapes regexp special characters
+function string.unescregex(self)
+	return self:unesc("%")
 end
 
 --- Returns an iterator which can be used in for loops
