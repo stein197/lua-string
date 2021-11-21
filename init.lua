@@ -5,12 +5,12 @@ local boolvalues = {
 	["yes"] = "no";
 	["y"] = "n"
 }
-local escchars = {
-	"\"", "'", "\\"
-}
 
 --- Splits string by supplied separator
 function string.split(self, sep)
+	if sep == "" then
+		return self:totable()
+	end
 	local result = {}
 	local previdx = 1
 	while true do
