@@ -38,6 +38,25 @@ TestString = {
 		luaunit.assertEquals(("1"):padend(1, "0"), "1")
 	end;
 
+	["test: esc()"] = function ()
+		luaunit.assertEquals((""):esc(), "")
+		luaunit.assertEquals(("abc"):esc(), "abc")
+		luaunit.assertEquals(("abc'"):esc(), "abc\\'")
+		luaunit.assertEquals(("abc'"):esc():esc(), "abc\\\\\\'")
+		luaunit.assertEquals(("\\"):esc(), "\\\\")
+	end;
+
+	["test: unesc()"] = function ()
+		luaunit.assertEquals((""):unesc(), "")
+		luaunit.assertEquals(("abc"):unesc(), "abc")
+		luaunit.assertEquals(("abc'"):unesc(), "abc'")
+		luaunit.assertEquals(("abc\\'"):unesc(), "abc'")
+		luaunit.assertEquals(("abc\\\\\\'"):unesc():unesc(), "abc'")
+		luaunit.assertEquals(("\\"):unesc(), "")
+		luaunit.assertEquals(("\\\\"):unesc(), "\\")
+		luaunit.assertEquals(("abc\\"):unesc(), "abc")
+	end;
+
 	["test: iter()"] = function ()
 		local iter = (""):iter()
 		local r = {}

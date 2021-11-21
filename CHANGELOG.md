@@ -1,6 +1,5 @@
 # CHANGELOG
 ## Unreleased
-- `esc` and `unesc` methods
 - `escregex` and `unescregex` methods
 - `ensurestart` and `ensureend` methods
 - `toarray` method to return array from array lib

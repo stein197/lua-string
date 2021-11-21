@@ -5,6 +5,18 @@ local boolvalues = {
 	["yes"] = "no";
 	["y"] = "n"
 }
+local eschars = {
+	"\"", "'", "\\"
+}
+
+local function includes(tbl, item)
+	for k, v in pairs(tbl) do
+		if v == item then
+			return true
+		end
+	end
+	return false
+end
 
 -- Splits string by supplied separator
 function string.split(self, sep)
@@ -64,6 +76,32 @@ function string.padend(self, len, char)
 	return self..char:rep(charsmount)
 end
 
+-- Adds backslashes before ", ' and \ characters
+function string.esc(self)
+	local result = ""
+	for char in self:iter() do
+		result = includes(eschars, char) and result.."\\"..char or result..char
+	end
+	return result
+end
+
+-- Strips backslashes from the string
+function string.unesc(self)
+	local result = ""
+	local i = 0
+	while i <= #self do
+		local char = self:sub(i, i)
+		if char == "\\" then
+			i = i + 1
+			result = result..self:sub(i, i)
+		else
+			result = result..char
+		end
+		i = i + 1
+	end
+	return result
+end
+
 --- Returns an iterator which can be used in for loops
 function string.iter(self)
 	local i = 0
@@ -80,12 +118,12 @@ end
 
 -- Returns true if string starts with specified string
 function string.startswith(self, prefix)
-	return self:match("^"..prefix:escaperegex()) ~= nil
+	return self:match("^"..prefix:escregex()) ~= nil
 end
 
 -- Returns true if string ends with specified string
 function string.endswith(self, suffix)
-	return self:match(suffix:escaperegex().."$") ~= nil
+	return self:match(suffix:escregex().."$") ~= nil
 end
 
 -- Returns true if string length is 0

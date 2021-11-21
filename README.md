@@ -8,6 +8,8 @@ Table of contents
 	- [trim](#trim)
 	- [padstart](#padstart)
 	- [padend](#padend)
+	- [esc](#esc)
+	- [unesc](#unesc)
 	- [iter](#iter)
 	- [truncate](#truncate)
 	- [startswith](#startswith)
@@ -58,6 +60,22 @@ Pads string at the start with specified char until specified length. " " pad cha
 Pads string at the end with specified char until specified length. " " pad char by default
 ```lua
 ("123"):padend(6, "-") -- "123---"
+```
+
+<a id="esc"></a>
+
+### esc(self)
+Adds backslashes before ", ' and \ characters
+```lua
+("abc'"):esc() -- "abc\\'"
+```
+
+<a id="unesc"></a>
+
+### unesc(self)
+Strips backslashes from the string
+```lua
+("abc\\'"):unesc() -- "abc'"
 ```
 
 <a id="iter"></a>
