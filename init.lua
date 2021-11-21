@@ -6,7 +6,7 @@ local boolvalues = {
 	["y"] = "n"
 }
 
---- Splits string by supplied separator
+-- Splits string by supplied separator
 function string.split(self, sep)
 	if sep == "" then
 		return self:totable()
@@ -44,7 +44,7 @@ function string.trim(self, chars)
 	return self:gsub("^["..chars.."]", ""):gsub("["..chars.."]$", "")
 end
 
--- Pads string with spacified char until specified length. " " pad char by default
+-- Pads string at the start with specified char until specified length. " " pad char by default
 function string.padstart(self, len, char)
 	local charsmount = self:len() - len
 	if charsmount <= 0 then
@@ -54,7 +54,7 @@ function string.padstart(self, len, char)
 	return char:rep(charsmount)..self
 end
 
--- Pads string with spacified char until specified length. " " pad char by default
+-- Pads string at the end with specified char until specified length. " " pad char by default
 function string.padend(self, len, char)
 	local charsmount = self:len() - len
 	if charsmount <= 0 then
@@ -78,12 +78,12 @@ function string.truncate(self, len, suffix)
 	return suffix and self:len() + suffix:len() > len and self:sub(1, len - suffix:len())..suffix or self:sub(1, len)
 end
 
--- Returns true if string starts with prefix
+-- Returns true if string starts with specified string
 function string.startswith(self, prefix)
 	return self:match("^"..prefix:escaperegex()) ~= nil
 end
 
--- Returns true if string ends with prefix
+-- Returns true if string ends with specified string
 function string.endswith(self, suffix)
 	return self:match(suffix:escaperegex().."$") ~= nil
 end
@@ -98,7 +98,8 @@ function string.isblank(self)
 	return self:match("^%s*$") ~= nil
 end
 
---- Converts strings like "yes", "no", "1" and others into real boolean. Returns nil if casting cannot be done
+-- Converts "1", "true", "on", "yes", "y" and their contraries into real boolean. Returns nil if casting cannot be done.
+-- Case-insensetive
 function string.tobool(self)
 	local lowered = self:lower()
 	for truthy, falsy in pairs(boolvalues) do
@@ -111,7 +112,7 @@ function string.tobool(self)
 	return nil
 end
 
---- Returns table containing all the chars in the string
+-- Returns table containing all the chars in the string
 function string.totable(self)
 	local result = {}
 	for ch in self:iter() do
