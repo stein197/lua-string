@@ -41,7 +41,7 @@ end
 -- Trims string's characters from its endings. Trims whitespaces by default
 function string.trim(self, chars)
 	local chars = chars or "%s"
-	return self:gsub("^["..chars.."]", ""):gsub("["..chars.."]$", "")
+	return self:gsub("^["..chars.."]+", ""):gsub("["..chars.."]+$", "")
 end
 
 -- Pads string at the start with specified char until specified length. " " pad char by default
