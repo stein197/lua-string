@@ -9,15 +9,6 @@ local escchars = {
 	"\"", "'", "\\"
 }
 
-local function contains(tbl, elt)
-	for k, v in pairs(tbl) do
-		if v == elt then
-			return true
-		end
-	end
-	return false
-end
-
 --- Splits string by supplied separator
 function string.split(self, sep)
 	local result = {}
