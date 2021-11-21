@@ -87,34 +87,6 @@ function string.truncate(self, len, suffix)
 	return suffix and self:len() + suffix:len() > len and self:sub(1, len - suffix:len())..suffix or self:sub(1, len)
 end
 
--- TODO
--- Escapes quotes and backslashes
-function string.esc(self)
-	local prevchar
-	local result = ""
-	for char in self:iter() do
-		if contains(escchars, char) and prevchar ~= "\\" then
-			result = result.."\\"..char
-		else
-			result = result..char
-		end
-		prevchar = char
-	end
-	return result
-end
-
--- TODO
-function string.unesc(self) end
-
--- TODO
-function string.ensurestart(self, prefix)
-	local firstchar = self:sub(1, 1)
-
-end
-
--- TODO
-function string.ensureend(self, suffix) end
-
 -- Returns true if string starts with prefix
 function string.startswith(self, prefix)
 	return self:match("^"..prefix:escaperegex()) ~= nil
