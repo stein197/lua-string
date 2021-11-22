@@ -159,6 +159,8 @@ TestString = {
 
 		luaunit.assertEquals(("abcdef"):truncate(3), "abc")
 		luaunit.assertEquals(("abcdef"):truncate(6, "..."), "abc...")
+		luaunit.assertEquals(("abcdef"):truncate(100, "..."), "abcdef")
+		luaunit.assertEquals(("abcdef"):truncate(9, "..."), "abcdef")
 		luaunit.assertEquals(("abcdef"):truncate(0), "")
 		luaunit.assertEquals(("abcdef"):truncate(-1), "abcdef")
 
