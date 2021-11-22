@@ -74,22 +74,12 @@ end
 
 -- Pads string at the start with specified char until specified length. " " pad char by default
 function string.padstart(self, len, char)
-	local charsmount = len - self:len()
-	if charsmount <= 0 then
-		return self
-	end
-	local char = char or " "
-	return char:rep(charsmount)..self
+	return (char or " "):rep(len - self:len())..self
 end
 
 -- Pads string at the end with specified char until specified length. " " pad char by default
 function string.padend(self, len, char)
-	local charsmount = len - self:len()
-	if charsmount <= 0 then
-		return self
-	end
-	local char = char or " "
-	return self..char:rep(charsmount)
+	return self..(char or " "):rep(len - self:len())
 end
 
 -- Adds backslashes before ", ' and \ characters. Escape character can be specified ("\\" by default) as well as
