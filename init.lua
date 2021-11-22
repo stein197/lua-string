@@ -74,7 +74,7 @@ end
 
 -- Pads string at the start with specified char until specified length. " " pad char by default
 function string.padstart(self, len, char)
-	local charsmount = self:len() - len
+	local charsmount = len - self:len()
 	if charsmount <= 0 then
 		return self
 	end
@@ -84,7 +84,7 @@ end
 
 -- Pads string at the end with specified char until specified length. " " pad char by default
 function string.padend(self, len, char)
-	local charsmount = self:len() - len
+	local charsmount = len - self:len()
 	if charsmount <= 0 then
 		return self
 	end
