@@ -143,7 +143,7 @@ end
 
 --- Truncates string to a specified length with optional suffix (usually "...", nil by default)
 function string.truncate(self, len, suffix)
-	return suffix and self:len() + suffix:len() > len and self:sub(1, len - suffix:len())..suffix or self:sub(1, len)
+	return suffix and len - suffix:len() >= 0 and self:sub(1, len - suffix:len())..suffix or self:sub(1, len)
 end
 
 -- Returns true if string starts with specified string
