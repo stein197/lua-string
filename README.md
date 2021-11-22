@@ -11,6 +11,8 @@ Table of contents
 	- [trimright](#trimright)
 	- [padstart](#padstart)
 	- [padend](#padend)
+	- [ensureleft](#ensureleft)
+	- [ensureright](#ensureright)
 	- [esc](#esc)
 	- [unesc](#unesc)
 	- [esc](#escregex)
@@ -91,6 +93,24 @@ Pads string at the start with specified char until specified length. " " pad cha
 Pads string at the end with specified char until specified length. " " pad char by default
 ```lua
 ("123"):padend(6, "-") -- "123---"
+```
+
+<a id="ensureleft"></a>
+
+### ensureleft(self, prefix)
+If the string starts with prefix then returns string itself, otherwise pads the string until it starts the prefix
+```lua
+("domain.com"):ensureleft("https://") -- "https://domain.com"
+("https://domain.com"):ensureleft("https://") -- "https://domain.com"
+```
+
+<a id="ensureright"></a>
+
+### ensureright(self, suffix)
+If the string ends with prefix then returns string itself, otherwise pads the string until it ends the prefix
+```lua
+("path"):ensureright("/") -- "path/"
+("path/"):ensureright("/") -- "path/"
 ```
 
 <a id="esc"></a>

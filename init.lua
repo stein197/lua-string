@@ -82,6 +82,30 @@ function string.padend(self, len, char)
 	return self..(char or " "):rep(len - self:len())
 end
 
+-- If the string starts with prefix then returns string itself, otherwise pads the string until it starts the prefix
+function string.ensureleft(self, prefix)
+	local prefixlen = prefix:len()
+	local left = self:sub(1, prefixlen)
+	local i = 1
+	while not prefix:endswith(left) and i <= prefixlen do
+		i = i + 1
+		left = left:sub(1, -2)
+	end
+	return prefix:sub(1, i - 1)..self
+end
+
+-- If the string ends with prefix then returns string itself, otherwise pads the string until it ends the prefix
+function string.ensureright(self, suffix)
+	local suffixlen = suffix:len()
+	local right = self:sub(-suffixlen)
+	local i = suffixlen
+	while not suffix:startswith(right) and i > 1 do
+		i = i - 1
+		right = right:sub(-2)
+	end
+	return self..suffix:sub(i + 1)
+end
+
 -- Adds backslashes before ", ' and \ characters. Escape character can be specified ("\\" by default) as well as
 -- characters to escape ({"\"", "'", "\\"} by default)
 function string.esc(self, eschar, eschartbl)

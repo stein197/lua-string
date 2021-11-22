@@ -52,6 +52,9 @@ TestString = {
 		luaunit.assertEquals(("1"):padend(1, "0"), "1")
 	end;
 
+	["test: ensureleft()"] = function () error("Not implemented") end; -- TODO
+	["test: ensureright()"] = function () error("Not implemented") end; -- TODO
+
 	["test: esc()"] = function ()
 		luaunit.assertEquals((""):esc(), "")
 		luaunit.assertEquals(("abc"):esc(), "abc")
