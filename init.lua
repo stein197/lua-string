@@ -143,12 +143,12 @@ end
 
 -- Returns true if string starts with specified string
 function string.startswith(self, prefix)
-	return self:match("^"..prefix:escregex()) ~= nil
+	return self:sub(0, prefix:len()) == prefix
 end
 
 -- Returns true if string ends with specified string
 function string.endswith(self, suffix)
-	return self:match(suffix:escregex().."$") ~= nil
+	return self:sub(self:len() - suffix:len() + 1) == suffix
 end
 
 -- Returns true if string length is 0
