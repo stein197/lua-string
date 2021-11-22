@@ -59,16 +59,16 @@ end
 -- Trims string's characters from its endings. Trims whitespaces by default
 function string.trim(self, chars)
 	chars = chars or "%s"
-	return self:ltrim(chars):rtrim(chars)
+	return self:trimleft(chars):trimright(chars)
 end
 
 -- Trims string's characters from its left side. Trims whitespaces by default
-function string.ltrim(self, chars)
+function string.trimleft(self, chars)
 	return self:gsub("^["..(chars or "%s").."]+", "")
 end
 
 -- Trims string's characters from its right side. Trims whitespaces by default
-function string.rtrim(self, chars)
+function string.trimright(self, chars)
 	return self:gsub("["..(chars or "%s").."]+$", "")
 end
 

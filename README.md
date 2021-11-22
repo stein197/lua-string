@@ -1,13 +1,14 @@
-# Lua string common methods
+# Lua standard string library extension
 The package extends default Lua's string library with several useful common methods which are present in most other languages
 
 Table of contents
+- [Installation](#installation)
 - [API](#api)
 	- [split](#split)
 	- [splitregex](#splitregex)
 	- [trim](#trim)
-	- [ltrim](#ltrim)
-	- [rtrim](#rtrim)
+	- [trimleft](#trimleft)
+	- [trimright](#trimright)
 	- [padstart](#padstart)
 	- [padend](#padend)
 	- [esc](#esc)
@@ -22,6 +23,16 @@ Table of contents
 	- [isblank](#isblank)
 	- [tobool](#tobool)
 	- [totable](#totable)
+
+## Installation
+Via LuaRocks:
+```
+luarocks install <>
+```
+Then in the code:
+```lua
+require ""
+```
 
 ## API
 
@@ -50,20 +61,20 @@ Trims string's characters from its endings. Trims whitespaces by default
 (" /abc/"):trim("/ ") -- "abc"
 ```
 
-<a id="ltrim"></a>
+<a id="trimleft"></a>
 
-### ltrim(self, chars)
+### trimleft(self, chars)
 Trims string's characters from its left side. Trims whitespaces by default
 ```lua
-(" abc "):ltrim() -- "abc "
+(" abc "):trimleft() -- "abc "
 ```
 
-<a id="rtrim"></a>
+<a id="trimright"></a>
 
-### rtrim(self, chars)
+### trimright(self, chars)
 Trims string's characters from its right side. Trims whitespaces by default
 ```lua
-(" abc "):ltrim() -- " abc"
+(" abc "):trimleft() -- " abc"
 ```
 
 <a id="padstart"></a>
