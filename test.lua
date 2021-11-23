@@ -1,14 +1,40 @@
 require "."
 local luaunit = require "luaunit"
 
-TestString = {
-	["test: split()"] = function ()
-		luaunit.assertEquals((""):split(""), {})
-		luaunit.assertEquals(("abc"):split(""), {"a", "b", "c"})
-		luaunit.assertEquals(("a b c"):split(" "), {"a", "b", "c"})
-		luaunit.assertEquals(("a, b, c"):split(", "), {"a", "b", "c"})
-		luaunit.assertEquals(("a-b--c"):split("-"), {"a", "b", "", "c"})
+local abc = "abc"
+local abcdef = "abcdef"
+local empty = ""
+local space = " "
+local ae = luaunit.assertEquals
+
+TestSplit = {
+	["test: Splitting empty string with empty one returns empty table"] = function()
+		ae(empty:split(empty), {})
 	end;
+
+	["test: Splitting by empty string returns table of chars"] = function ()
+		ae(abc:split(empty), {"a", "b", "c"})
+	end;
+
+	["test: Default"] = function ()
+		ae(("a b c"):split(space), {"a", "b", "c"})
+	end;
+
+	["test: Splitting by multicharacter string"] = function ()
+		ae(("a, b, c"):split(", "), {"a", "b", "c"})
+	end;
+
+	["test: Splitting repeating separators results in empty strings"] = function ()
+		ae(("a-b--c"):split("-"), {"a", "b", "", "c"})
+	end;
+
+	["test: Splitting separator returns empty strings"] = function ()
+		ae(("-"):split("-"), {"", ""})
+		ae(("--"):split("-"), {"", "", ""})
+	end;
+}
+
+TestString = {
 
 	["test: splitregex()"] = function ()
 		luaunit.assertEquals((""):splitregex(""), {})
