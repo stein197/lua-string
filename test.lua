@@ -169,6 +169,7 @@ TestString = {
 	["test: ensurestart()"] = function () error("Not implemented") end; -- TODO
 	["test: ensureend()"] = function () error("Not implemented") end; -- TODO
 
+	-- TODO: Extract and split
 	["test: esc()"] = function ()
 		luaunit.assertEquals((""):esc(), "")
 		luaunit.assertEquals(("abc"):esc(), "abc")
@@ -177,6 +178,7 @@ TestString = {
 		luaunit.assertEquals(("\\"):esc(), "\\\\")
 	end;
 
+	-- TODO: Extract and split
 	["test: unesc()"] = function ()
 		luaunit.assertEquals((""):unesc(), "")
 		luaunit.assertEquals(("abc"):unesc(), "abc")
@@ -188,6 +190,7 @@ TestString = {
 		luaunit.assertEquals(("abc\\"):unesc(), "abc")
 	end;
 
+	-- TODO: Extract and split
 	["test: escregex()"] = function ()
 		luaunit.assertEquals((""):escregex(), "")
 		luaunit.assertEquals(("."):escregex(), "%.")
@@ -217,6 +220,7 @@ TestString = {
 		luaunit.assertEquals((".%a%c%d%g%l%p%s%u%w%x().%+-*?[]^$"):escregex(), "%.%%a%%c%%d%%g%%l%%p%%s%%u%%w%%x%(%)%.%%%+%-%*%?%[%]%^%$")
 	end;
 
+	-- TODO: Extract and split
 	["test: unescregex()"] = function ()
 		luaunit.assertEquals((""):unescregex(), "")
 		luaunit.assertEquals(("%."):unescregex(), ".")
@@ -246,22 +250,23 @@ TestString = {
 		luaunit.assertEquals(("%.%%a%%c%%d%%g%%l%%p%%s%%u%%w%%x%(%)%.%%%+%-%*%?%[%]%^%$"):unescregex(), ".%a%c%d%g%l%p%s%u%w%x().%+-*?[]^$")
 	end;
 
-	["test: iter()"] = function ()
-		local iter = (""):iter()
+	["test: iter(): Calling at empty string returns empty loop"] = function ()
 		local r = {}
-		for char in iter do
+		for char in empty:iter() do
 			table.insert(r, char)
 		end
 		luaunit.assertEquals(r, {})
+	end;
 
-		iter = ("abc"):iter()
-		r = {}
-		for char in iter do
+	["test: iter(): Default"] = function ()
+		local r = {}
+		for char in abc:iter() do
 			table.insert(r, char)
 		end
 		luaunit.assertEquals(r, {"a", "b", "c"})
 	end;
 
+	-- TODO: Extract and split
 	["test: truncate()"] = function ()
 		luaunit.assertEquals((""):truncate(1), "")
 		luaunit.assertEquals((""):truncate(1, "..."), "")
