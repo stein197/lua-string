@@ -59,13 +59,15 @@ end
 -- Pads string at the start with specified char until specified length. " " pad char by default
 function string.padstart(self, len, str)
 	str = str or " "
-	return (str:rep(math.ceil(len - self:len()) / str:len())..self):sub(1, len)
+	local selflen = self:len()
+	return (str:rep(math.ceil(len - selflen) / str:len())..self):sub(1, selflen < len and len or selflen)
 end
 
 -- Pads string at the end with specified char until specified length. " " pad char by default
 function string.padend(self, len, str)
 	str = str or " "
-	return (self..str:rep(math.ceil(len - self:len()) / str:len())):sub(-len, -1)
+	local selflen = self:len()
+	return (self..str:rep(math.ceil(len - selflen) / str:len())):sub(-(selflen < len and len or selflen), -1)
 end
 
 -- If the string starts with prefix then returns string itself, otherwise pads the string until it starts the prefix
