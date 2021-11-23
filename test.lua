@@ -10,124 +10,116 @@ local blank = " 	"
 local whitespaced = "whitespaced"
 local ae = luaunit.assertEquals
 
-TestSplit = {
-	["test: Splitting empty string with empty one returns empty table"] = function()
+TestString = {
+
+	["test: split(): Splitting empty string with empty one returns empty table"] = function()
 		ae(empty:split(empty), {})
 	end;
-
-	["test: Splitting by empty string returns table of chars"] = function ()
+	
+	["test: split(): Splitting by empty string returns table of chars"] = function ()
 		ae(abc:split(empty), {"a", "b", "c"})
 	end;
-
-	["test: Default"] = function ()
+	
+	["test: split(): Default"] = function ()
 		ae(("a b c"):split(space), {"a", "b", "c"})
 	end;
-
-	["test: Splitting by multicharacter string"] = function ()
+	
+	["test: split(): Splitting by multicharacter string"] = function ()
 		ae(("a, b, c"):split(", "), {"a", "b", "c"})
 	end;
-
-	["test: Splitting repeating separators results in empty strings"] = function ()
+	
+	["test: split(): Splitting repeating separators results in empty strings"] = function ()
 		ae(("a-b--c"):split("-"), {"a", "b", "", "c"})
 	end;
-
-	["test: Splitting separator returns empty strings"] = function ()
+	
+	["test: split(): Splitting separator returns empty strings"] = function ()
 		ae(("-"):split("-"), {"", ""})
 		ae(("--"):split("-"), {"", "", ""})
 	end;
-
-	["test: Regex: Splitting empty string with empty one returns empty table"] = function()
+	
+	["test: split(): Regex: Splitting empty string with empty one returns empty table"] = function()
 		ae(empty:split(empty, true), {})
 	end;
-
-	["test: Regex: Splitting by empty string returns table of chars"] = function ()
+	
+	["test: split(): Regex: Splitting by empty string returns table of chars"] = function ()
 		ae(abc:split(empty, true), {"a", "b", "c"})
 	end;
-
-	["test: Regex: Default"] = function ()
+	
+	["test: split(): Regex: Default"] = function ()
 		ae(("a b c"):split("%s", true), {"a", "b", "c"})
 	end;
-
-	["test: Regex: Splitting by multicharacter string"] = function ()
+	
+	["test: split(): Regex: Splitting by multicharacter string"] = function ()
 		ae(("a, b,c"):split("%s*,%s*", true), {"a", "b", "c"})
 	end;
-
-	["test: Regex: Splitting repeating separators results in empty strings"] = function ()
+	
+	["test: split(): Regex: Splitting repeating separators results in empty strings"] = function ()
 		ae(("a-b--c"):split("%-+", true), {"a", "b", "c"})
 	end;
-}
 
-TestTrim = {
-	["test: Trimming empty string returns empty one"] = function ()
+	["test: trim(): Trimming empty string returns empty one"] = function ()
 		ae(empty:trim(), "")
 	end;
-
-	["test: Trimming blank string returns empty one"] = function ()
+	
+	["test: trim(): Trimming blank string returns empty one"] = function ()
 		ae(blank:trim(), "")
 	end;
-
-	["test: Default"] = function ()
+	
+	["test: trim(): Default"] = function ()
 		ae(whitespaced:trim(), "a")
 	end;
-
-	["test: Trimming specified char at single side"] = function ()
+	
+	["test: trim(): Trimming specified char at single side"] = function ()
 		ae(abc:trim("c"), "ab")
 	end;
-
-	["test: Trimming specified char"] = function ()
+	
+	["test: trim(): Trimming specified char"] = function ()
 		ae(("abcba"):trim("a"), "bcb")
 	end;
-
-	["test: Trimming group of chars"] = function ()
+	
+	["test: trim(): Trimming group of chars"] = function ()
 		ae(("/path/?"):trim("/%?"), "path")
 	end;
-}
 
-TestTrimStart = {
-	["test: Trimming empty string returns empty one"] = function ()
+	["test: trimstart(): Trimming empty string returns empty one"] = function ()
 		ae(empty:trimstart(), "")
 	end;
-
-	["test: Trimming blank string returns empty one"] = function ()
+	
+	["test: trimstart(): Trimming blank string returns empty one"] = function ()
 		ae(blank:trimstart(), "")
 	end;
-
-	["test: Default"] = function ()
+	
+	["test: trimstart(): Default"] = function ()
 		ae(whitespaced:trimstart(), "a 	")
 	end;
-
-	["test: Trimming specified char at single side"] = function ()
+	
+	["test: trimstart(): Trimming specified char at single side"] = function ()
 		ae(abc:trimstart("a"), "bc")
 	end;
-
-	["test: Trimming group of chars"] = function ()
+	
+	["test: trimstart(): Trimming group of chars"] = function ()
 		ae(abcdef:trimstart("ba%s"), "cdef")
 	end;
-}
 
-TestTrimEnd = {
-	["test: Trimming empty string returns empty one"] = function ()
+	["test: trimend(): Trimming empty string returns empty one"] = function ()
 		ae(empty:trimend(), "")
 	end;
-
-	["test: Trimming blank string returns empty one"] = function ()
+	
+	["test: trimend(): Trimming blank string returns empty one"] = function ()
 		ae(blank:trimend(), "")
 	end;
-
-	["test: Default"] = function ()
+	
+	["test: trimend(): Default"] = function ()
 		ae(whitespaced:trimend(), " a")
 	end;
-
-	["test: Trimming specified char at single side"] = function ()
+	
+	["test: trimend(): Trimming specified char at single side"] = function ()
 		ae(abc:trimend("c"), "ab")
 	end;
-
-	["test: Trimming group of chars"] = function ()
+	
+	["test: trimend(): Trimming group of chars"] = function ()
 		ae(abcdef:trimend("fe%s"), "abcd")
 	end;
-}
-
-TestString = {
 
 	["test: padstart()"] = function ()
 		luaunit.assertEquals((""):padstart(3, "0"), "000")
