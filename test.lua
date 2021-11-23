@@ -274,13 +274,19 @@ TestString = {
 		luaunit.assertFalse(("abc"):isempty())
 	end;
 
-	["test: isblank()"] = function ()
-		luaunit.assertTrue((""):isblank())
-		luaunit.assertTrue((" "):isblank())
-		luaunit.assertTrue((" 	"):isblank())
-		luaunit.assertTrue((" 	\n"):isblank())
-		luaunit.assertFalse(("a"):isblank())
-		luaunit.assertFalse(("abc"):isblank())
+	["test: isblank(): Calling at empty string returns true"] = function ()
+		at(empty:isblank())
+	end;
+
+	["test: isblank(): Calling at whitespaced string returns true"] = function ()
+		at((" "):isblank())
+		at((" 	"):isblank())
+		at((" 	\n"):isblank())
+	end;
+
+	["test: isblank(): Calling at arbitrary string returns false"] = function ()
+		af(a:isblank())
+		af(abc:isblank())
 	end;
 
 	["test: tobool(): Default"] = function ()
