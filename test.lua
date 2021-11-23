@@ -303,10 +303,16 @@ TestString = {
 		luaunit.assertNil(("abc"):tobool())
 	end;
 
-	["test: totable()"] = function ()
-		luaunit.assertEquals((""):totable(), {})
-		luaunit.assertEquals(("a"):totable(), {"a"})
-		luaunit.assertEquals(("abc"):totable(), {"a", "b", "c"})
+	["test: totable(): Converting empty string returns empty table"] = function ()
+		ae(empty:totable(), {})
+	end;
+
+	["test: totable(): Converting single char string returns table with one item"] = function ()
+		ae(a:totable(), {"a"})
+	end;
+
+	["test: totable(): Default"] = function ()
+		ae(abc:totable(), {"a", "b", "c"})
 	end;
 }
 
