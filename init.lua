@@ -67,7 +67,7 @@ function string.padend(self, len, char)
 end
 
 -- If the string starts with prefix then returns string itself, otherwise pads the string until it starts the prefix
-function string.ensurestart(self, prefix)
+function string.ensurestart(self, prefix) -- TODO: If string is larger return opposite function
 	local prefixlen = prefix:len()
 	local left = self:sub(1, prefixlen)
 	local i = 1
@@ -79,7 +79,7 @@ function string.ensurestart(self, prefix)
 end
 
 -- If the string ends with prefix then returns string itself, otherwise pads the string until it ends the prefix
-function string.ensureend(self, suffix)
+function string.ensureend(self, suffix) -- TODO: If string is larger return opposite function
 	local suffixlen = suffix:len()
 	local right = self:sub(-suffixlen)
 	local i = suffixlen

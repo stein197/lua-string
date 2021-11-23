@@ -166,8 +166,76 @@ TestString = {
 		ae(abcdef:padend(10, "12"), "abcdef1212")
 	end;
 
-	["test: ensurestart()"] = function () error("Not implemented") end; -- TODO
-	["test: ensureend()"] = function () error("Not implemented") end; -- TODO
+	["test: ensurestart(): Ensuring empty string returns prefix"] = function ()
+		ae(empty:ensurestart("/"), "/")
+		ae(empty:ensurestart("path/"), "path/")
+	end;
+
+	["test: ensurestart(): Ensuring with empty string returns the string"] = function ()
+		ae(a:ensurestart(""), "a")
+		ae(abc:ensurestart(""), "abc")
+	end;
+
+	["test: ensurestart(): Ensuring with single char"] = function ()
+		ae(a:ensurestart("/"), "/a")
+		ae(("/a"):ensurestart("/"), "/a")
+		ae(abc:ensurestart("/"), "/abc")
+		ae(("/abc"):ensurestart("/"), "/abc")
+	end;
+
+	["test: ensurestart(): Ensuring with string"] = function ()
+		ae(("def"):ensurestart("abc"), "abcdef")
+		ae(("cdef"):ensurestart("abc"), "abcdef")
+		ae(("abcdef"):ensurestart("abc"), "abcdef")
+	end;
+
+	["test: ensurestart(): Ensuring with prefix larger than the string returns prefix"] = function ()
+		ae(("c"):ensurestart("bc"), "bc")
+		ae(("def"):ensurestart("abcdef"), "abcdef")
+	end;
+
+	["test: ensurestart(): Ensuring with prefix larger than the string and partially matches the string"] = function ()
+		ae(("defghi"):ensurestart("abcdefg"), "abcdefghi")
+	end;
+
+	["test: ensurestart(): Ensuring with prefix larger than the string and does not match the string"] = function ()
+		ae(abc:ensurestart("defghi"), "defghiabc")
+	end;
+
+	["test: ensureend(): Ensuring empty string returns suffix"] = function ()
+		ae(empty:ensureend("/"), "/")
+		ae(empty:ensureend("path/"), "path/")
+	end;
+	
+	["test: ensureend(): Ensuring with empty string returns the string"] = function ()
+		ae(a:ensureend(""), "a")
+		ae(abc:ensureend(""), "abc")
+	end;
+	
+	["test: ensureend(): Ensuring with single char"] = function ()
+		ae(a:ensureend("/"), "a/")
+		ae(("a/"):ensureend("/"), "a/")
+		ae(abc:ensureend("/"), "abc/")
+		ae(("abc/"):ensureend("/"), "abc/")
+	end;
+	
+	["test: ensureend(): Ensuring with string"] = function ()
+		ae(abc:ensureend("def"), "abcdef")
+		ae(abcdef:ensureend("def"), "abcdef")
+	end;
+	
+	["test: ensureend(): Ensuring with suffix larger than the string returns suffix"] = function ()
+		ae(a:ensureend("abc"), "abc")
+		ae(abc:ensureend("abcdef"), "abcdef")
+	end;
+	
+	["test: ensureend(): Ensuring with suffix larger than the string and partially matches the string"] = function ()
+		ae(("abcdef"):ensureend("cdefghi"), "abcdefghi")
+	end;
+	
+	["test: ensureend(): Ensuring with suffix larger than the string and does not match the string"] = function ()
+		ae(abc:ensureend("defghi"), "abcdefghi")
+	end;
 
 	-- TODO: Extract and split
 	["test: esc()"] = function ()
