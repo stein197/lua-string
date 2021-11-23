@@ -267,11 +267,17 @@ TestString = {
 		luaunit.assertFalse(("abc"):endswith("a"))
 	end;
 
-	["test: isempty()"] = function ()
-		luaunit.assertTrue((""):isempty())
-		luaunit.assertFalse((" "):isempty())
-		luaunit.assertFalse(("a"):isempty())
-		luaunit.assertFalse(("abc"):isempty())
+	["test: isempty(): Calling at empty string returns true"] = function ()
+		at(empty:isempty())
+	end;
+
+	["test: isempty(): Calling at blank string returns false"] = function ()
+		af(space:isempty())
+	end;
+
+	["test: isempty(): Calling at arbitrary string returns true"] = function ()
+		af(a:isempty())
+		af(abc:isempty())
 	end;
 
 	["test: isblank(): Calling at empty string returns true"] = function ()
@@ -310,11 +316,11 @@ TestString = {
 		af(("N"):tobool())
 	end;
 	
-	["test: tobool(): Calling at empty string returns nil"] = function ()
+	["test: tobool(): Converting empty string returns nil"] = function ()
 		an(empty:tobool())
 	end;
 
-	["test: tobool(): Calling at arbitrary string returns nil"] = function ()
+	["test: tobool(): Converting arbitrary string returns nil"] = function ()
 		an(abc:tobool())
 	end;
 
