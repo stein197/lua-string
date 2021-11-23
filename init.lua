@@ -60,14 +60,14 @@ end
 function string.padstart(self, len, str)
 	str = str or " "
 	local selflen = self:len()
-	return (str:rep(math.ceil(len - selflen) / str:len())..self):sub(1, selflen < len and len or selflen)
+	return (str:rep(math.ceil((len - selflen) / str:len()))..self):sub(-(selflen < len and len or selflen))
 end
 
 -- Pads string at the end with specified char until specified length. " " pad char by default
 function string.padend(self, len, str)
 	str = str or " "
 	local selflen = self:len()
-	return (self..str:rep(math.ceil(len - selflen) / str:len())):sub(-(selflen < len and len or selflen), -1)
+	return (self..str:rep(math.ceil((len - selflen) / str:len()))):sub(1, selflen < len and len or selflen)
 end
 
 -- If the string starts with prefix then returns string itself, otherwise pads the string until it starts the prefix
@@ -78,7 +78,7 @@ function string.ensurestart(self, prefix)
 	end
 	local left = self:sub(1, prefixlen)
 	local i = 1
-	while not prefix:endswith(left) and i <= prefixlen do
+	while not prefix:endswith(left) and i < prefixlen do
 		i = i + 1
 		left = left:sub(1, -2)
 	end
@@ -93,7 +93,7 @@ function string.ensureend(self, suffix)
 	end
 	local right = self:sub(-suffixlen)
 	local i = suffixlen
-	while not suffix:startswith(right) and i > 1 do
+	while not suffix:startswith(right) and i >= 1 do
 		i = i - 1
 		right = right:sub(-2)
 	end
