@@ -5,6 +5,7 @@ local abc = "abc"
 local abcdef = "abcdef"
 local empty = ""
 local space = " "
+local blank = " 	"
 local ae = luaunit.assertEquals
 
 TestSplit = {
@@ -54,15 +55,33 @@ TestSplit = {
 	end;
 }
 
-TestString = {
-
-	["test: trim()"] = function ()
-		luaunit.assertEquals((""):trim(), "")
-		luaunit.assertEquals((" 	"):trim(), "")
-		luaunit.assertEquals((" a 	"):trim(), "a")
-		luaunit.assertEquals(("abc"):trim("c"), "ab")
-		luaunit.assertEquals(("abcba"):trim("a"), "bcb")
+TestTrim = {
+	["test: Trimming empty string returns empty one"] = function ()
+		ae(empty:trim(), "")
 	end;
+
+	["test: Trimming blank string returns empty one"] = function ()
+		ae(blank:trim(), "")
+	end;
+
+	["test: Default"] = function ()
+		ae((" a 	"):trim(), "a")
+	end;
+
+	["test: Trimming specified char at single side"] = function ()
+		ae(abc:trim("c"), "ab")
+	end;
+
+	["test: Trimming specified char"] = function ()
+		ae(("abcba"):trim("a"), "bcb")
+	end;
+
+	["test: Trimming group of chars"] = function ()
+		ae(abcdef:trim("fe%s"), "abcd")
+	end;
+}
+
+TestString = {
 
 	["test: trimstart()"] = function ()
 		luaunit.assertEquals((""):trimstart(), "")
