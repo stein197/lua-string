@@ -95,7 +95,7 @@ function string.ensureend(self, suffix)
 	local i = suffixlen
 	while not suffix:startswith(right) and i >= 1 do
 		i = i - 1
-		right = right:sub(-2)
+		right = right:sub(2)
 	end
 	return self..suffix:sub(i + 1)
 end
