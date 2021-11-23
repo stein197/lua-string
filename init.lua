@@ -22,14 +22,14 @@ local function includes(tbl, item)
 end
 
 -- Splits string by supplied separator
-function string.split(self, sep)
+function string.split(self, sep, regex)
 	if sep == "" then
 		return self:totable()
 	end
 	local result = {}
 	local previdx = 1
 	while true do
-		local startidx, endidx = self:find(sep, previdx, true)
+		local startidx, endidx = self:find(sep, previdx, not regex)
 		if not startidx then
 			table.insert(result, self:sub(previdx))
 			break
@@ -37,22 +37,6 @@ function string.split(self, sep)
 		table.insert(result, self:sub(previdx, startidx - 1))
 		previdx = endidx + 1
 	end
-	return result
-end
-
--- Splits string by supplied regular expression string
-function string.splitregex(self, regex)
-	if regex == "" then
-		return self:totable()
-	end
-	local result = {}
-	local previdx = 1
-	for match in self:gmatch(regex) do
-		local startidx, endidx = self:find(match, previdx, true)
-		table.insert(result, self:sub(previdx, startidx - 1))
-		previdx = endidx + 1
-	end
-	table.insert(result, self:sub(previdx))
 	return result
 end
 

@@ -5,7 +5,6 @@ Table of contents
 - [Installation](#installation)
 - [API](#api)
 	- [split](#split)
-	- [splitregex](#splitregex)
 	- [trim](#trim)
 	- [trimstart](#trimstart)
 	- [trimend](#trimend)
@@ -44,14 +43,6 @@ require ""
 Splits string by supplied separator
 ```lua
 ("123-345-789"):split("-") -- {"123", "456", "789"}
-```
-
-<a id="splitregex"></a>
-
-### splitregex(self, regex)
-Splits string by supplied regular expression string
-```lua
-("123 , 456,789"):splitregex("%s*,%s*") -- {"123", "456", "789"}
 ```
 
 <a id="trim"></a>

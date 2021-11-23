@@ -37,11 +37,11 @@ TestSplit = {
 TestString = {
 
 	["test: splitregex()"] = function ()
-		luaunit.assertEquals((""):splitregex(""), {})
-		luaunit.assertEquals(("abc"):splitregex(""), {"a", "b", "c"})
-		luaunit.assertEquals(("a b c"):splitregex("%s"), {"a", "b", "c"})
-		luaunit.assertEquals(("a, b,c"):splitregex("%s*,%s*"), {"a", "b", "c"})
-		luaunit.assertEquals(("a-b--c"):splitregex("%-+"), {"a", "b", "c"})
+		luaunit.assertEquals((""):split("", true), {})
+		luaunit.assertEquals(("abc"):split("", true), {"a", "b", "c"})
+		luaunit.assertEquals(("a b c"):split("%s", true), {"a", "b", "c"})
+		luaunit.assertEquals(("a, b,c"):split("%s*,%s*", true), {"a", "b", "c"})
+		luaunit.assertEquals(("a-b--c"):split("%-+", true), {"a", "b", "c"})
 	end;
 
 	["test: trim()"] = function ()
