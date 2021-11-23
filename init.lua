@@ -57,18 +57,23 @@ function string.trimend(self, chars)
 end
 
 -- Pads string at the start with specified char until specified length. " " pad char by default
-function string.padstart(self, len, char)
-	return ((char or " "):rep(len - self:len())..self):sub(1, len)
+function string.padstart(self, len, str)
+	str = str or " "
+	return (str:rep(math.ceil(len - self:len()) / str:len())..self):sub(1, len)
 end
 
 -- Pads string at the end with specified char until specified length. " " pad char by default
-function string.padend(self, len, char)
-	return (self..(char or " "):rep(len - self:len())):sub(-len, -1)
+function string.padend(self, len, str)
+	str = str or " "
+	return (self..str:rep(math.ceil(len - self:len()) / str:len())):sub(-len, -1)
 end
 
 -- If the string starts with prefix then returns string itself, otherwise pads the string until it starts the prefix
-function string.ensurestart(self, prefix) -- TODO: If string is larger return opposite function
+function string.ensurestart(self, prefix)
 	local prefixlen = prefix:len()
+	if prefixlen > self:len() then
+		return prefix:ensureend(self)
+	end
 	local left = self:sub(1, prefixlen)
 	local i = 1
 	while not prefix:endswith(left) and i <= prefixlen do
@@ -79,8 +84,11 @@ function string.ensurestart(self, prefix) -- TODO: If string is larger return op
 end
 
 -- If the string ends with prefix then returns string itself, otherwise pads the string until it ends the prefix
-function string.ensureend(self, suffix) -- TODO: If string is larger return opposite function
+function string.ensureend(self, suffix)
 	local suffixlen = suffix:len()
+	if suffixlen > self:len() then
+		return suffix:ensurestart(self)
+	end
 	local right = self:sub(-suffixlen)
 	local i = suffixlen
 	while not suffix:startswith(right) and i > 1 do

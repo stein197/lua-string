@@ -143,6 +143,8 @@ TestString = {
 		ae(abcdef:padstart(8, "12"), "12abcdef")
 		ae(abcdef:padstart(9, "12"), "212abcdef")
 		ae(abcdef:padstart(10, "12"), "1212abcdef")
+		ae(abcdef:padstart(13, "123"), "3123123abcdef")
+		ae(abcdef:padstart(14, "123"), "23123123abcdef")
 	end;
 
 	["test: padend(): Padding an empty string returns pad string"] = function ()
@@ -164,6 +166,8 @@ TestString = {
 		ae(abcdef:padend(8, "12"), "abcdef12")
 		ae(abcdef:padend(9, "12"), "abcdef121")
 		ae(abcdef:padend(10, "12"), "abcdef1212")
+		ae(abcdef:padend(13, "123"), "abcdef1231231")
+		ae(abcdef:padend(14, "123"), "abcdef12312312")
 	end;
 
 	["test: ensurestart(): Ensuring empty string returns prefix"] = function ()
