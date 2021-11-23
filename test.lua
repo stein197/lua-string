@@ -7,8 +7,11 @@ local abcdef = "abcdef"
 local empty = ""
 local space = " "
 local blank = " 	"
-local whitespaced = "whitespaced"
+local whitespaced = " a 	"
 local ae = luaunit.assertEquals
+local an = luaunit.assertNil
+local at = luaunit.assertTrue
+local af = luaunit.assertFalse
 
 TestString = {
 
@@ -280,27 +283,33 @@ TestString = {
 		luaunit.assertFalse(("abc"):isblank())
 	end;
 
-	["test: tobool()"] = function ()
-		luaunit.assertTrue(("1"):tobool())
-		luaunit.assertTrue(("true"):tobool())
-		luaunit.assertTrue(("on"):tobool())
-		luaunit.assertTrue(("yes"):tobool())
-		luaunit.assertTrue(("y"):tobool())
-		luaunit.assertTrue(("TRUE"):tobool())
-		luaunit.assertTrue(("ON"):tobool())
-		luaunit.assertTrue(("YES"):tobool())
-		luaunit.assertTrue(("Y"):tobool())
-		luaunit.assertFalse(("0"):tobool())
-		luaunit.assertFalse(("false"):tobool())
-		luaunit.assertFalse(("off"):tobool())
-		luaunit.assertFalse(("no"):tobool())
-		luaunit.assertFalse(("n"):tobool())
-		luaunit.assertFalse(("FALSE"):tobool())
-		luaunit.assertFalse(("OFF"):tobool())
-		luaunit.assertFalse(("NO"):tobool())
-		luaunit.assertFalse(("N"):tobool())
-		luaunit.assertNil((""):tobool())
-		luaunit.assertNil(("abc"):tobool())
+	["test: tobool(): Default"] = function ()
+		at(("1"):tobool())
+		at(("true"):tobool())
+		at(("on"):tobool())
+		at(("yes"):tobool())
+		at(("y"):tobool())
+		at(("TRUE"):tobool())
+		at(("ON"):tobool())
+		at(("YES"):tobool())
+		at(("Y"):tobool())
+		af(("0"):tobool())
+		af(("false"):tobool())
+		af(("off"):tobool())
+		af(("no"):tobool())
+		af(("n"):tobool())
+		af(("FALSE"):tobool())
+		af(("OFF"):tobool())
+		af(("NO"):tobool())
+		af(("N"):tobool())
+	end;
+	
+	["test: tobool(): Calling at empty string returns nil"] = function ()
+		an(empty:tobool())
+	end;
+
+	["test: tobool(): Calling at arbitrary string returns nil"] = function ()
+		an(abc:tobool())
 	end;
 
 	["test: totable(): Converting empty string returns empty table"] = function ()
