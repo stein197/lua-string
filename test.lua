@@ -124,16 +124,46 @@ TestString = {
 		ae(abcdef:trimend("fe%s"), "abcd")
 	end;
 
-	["test: padstart()"] = function ()
-		luaunit.assertEquals((""):padstart(3, "0"), "000")
-		luaunit.assertEquals(("1"):padstart(3, "0"), "001")
-		luaunit.assertEquals(("1"):padstart(1, "0"), "1")
+	["test: padstart(): Padding an empty string returns pad string"] = function ()
+		ae(empty:padstart(3, "0"), "000")
 	end;
 
-	["test: padend()"] = function ()
-		luaunit.assertEquals((""):padend(3, "0"), "000")
-		luaunit.assertEquals(("1"):padend(3, "0"), "100")
-		luaunit.assertEquals(("1"):padend(1, "0"), "1")
+	["test: padstart(): Default"] = function ()
+		ae(a:padstart(3, "0"), "00a")
+	end;
+
+	["test: padstart(): Padding to length less or equal than string's one returns string"] = function ()
+		ae(abc:padstart(1, "0"), "abc")
+		ae(abc:padstart(3, "0"), "abc")
+	end;
+
+	["test: padstart(): Padding with multicharacter string trims trailing characters"] = function ()
+		ae(abcdef:padstart(6, "12"), "abcdef")
+		ae(abcdef:padstart(7, "12"), "2abcdef")
+		ae(abcdef:padstart(8, "12"), "12abcdef")
+		ae(abcdef:padstart(9, "12"), "212abcdef")
+		ae(abcdef:padstart(10, "12"), "1212abcdef")
+	end;
+
+	["test: padend(): Padding an empty string returns pad string"] = function ()
+		ae(empty:padend(3, "0"), "000")
+	end;
+	
+	["test: padend(): Default"] = function ()
+		ae(a:padend(3, "0"), "a00")
+	end;
+	
+	["test: padend(): Padding to length less or equal than string's one returns string"] = function ()
+		ae(abc:padend(1, "0"), "abc")
+		ae(abc:padend(3, "0"), "abc")
+	end;
+	
+	["test: padend(): Padding with multicharacter string trims trailing characters"] = function ()
+		ae(abcdef:padend(6, "12"), "abcdef")
+		ae(abcdef:padend(7, "12"), "abcdef1")
+		ae(abcdef:padend(8, "12"), "abcdef12")
+		ae(abcdef:padend(9, "12"), "abcdef121")
+		ae(abcdef:padend(10, "12"), "abcdef1212")
 	end;
 
 	["test: ensurestart()"] = function () error("Not implemented") end; -- TODO
