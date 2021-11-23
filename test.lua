@@ -237,25 +237,51 @@ TestString = {
 		ae(abc:ensureend("defghi"), "abcdefghi")
 	end;
 
-	-- TODO: Extract and split
-	["test: esc()"] = function ()
-		luaunit.assertEquals((""):esc(), "")
-		luaunit.assertEquals(("abc"):esc(), "abc")
-		luaunit.assertEquals(("abc'"):esc(), "abc\\'")
-		luaunit.assertEquals(("abc'"):esc():esc(), "abc\\\\\\'")
-		luaunit.assertEquals(("\\"):esc(), "\\\\")
+	["test: esc(): Escaping empty string returns empty one"] = function ()
+		ae(empty:esc(), "")
 	end;
 
-	-- TODO: Extract and split
-	["test: unesc()"] = function ()
-		luaunit.assertEquals((""):unesc(), "")
-		luaunit.assertEquals(("abc"):unesc(), "abc")
-		luaunit.assertEquals(("abc'"):unesc(), "abc'")
-		luaunit.assertEquals(("abc\\'"):unesc(), "abc'")
-		luaunit.assertEquals(("abc\\\\\\'"):unesc():unesc(), "abc'")
-		luaunit.assertEquals(("\\"):unesc(), "")
-		luaunit.assertEquals(("\\\\"):unesc(), "\\")
-		luaunit.assertEquals(("abc\\"):unesc(), "abc")
+	["test: esc(): Escaping regular string returns the string itself"] = function ()
+		ae(abc:esc(), "abc")
+	end;
+
+	["test: esc(): Escaping quotes"] = function ()
+		ae(("abc'"):esc(), "abc\\'")
+		ae(("abc\""):esc(), "abc\\\"")
+	end;
+
+	["test: esc(): Double escaping"] = function ()
+		ae(("abc'"):esc():esc(), "abc\\\\\\'")
+	end;
+
+	["test: esc(): Escaping single backslash"] = function ()
+		ae(("\\"):esc(), "\\\\")
+	end;
+
+	["test: unesc(): Unescaping empty string returns empty one"] = function ()
+		ae(empty:unesc(), "")
+	end;
+
+	["test: unesc(): Unescaping regular string returns the string itself"] = function ()
+		ae(abc:unesc(), "abc")
+	end;
+
+	["test: unesc(): Unescaping quotes returns the string itself"] = function ()
+		ae(("'"):unesc(), "'")
+		ae(("\""):unesc(), "\"")
+		ae(("abc'"):unesc(), "abc'")
+	end;
+
+	["test: unesc(): Default"] = function ()
+		ae(("abc\\'"):unesc(), "abc'")
+		ae(("abc\\\\\\'"):unesc():unesc(), "abc'")
+		ae(("\\"):unesc(), "")
+		ae(("\\\\"):unesc(), "\\")
+		ae(("abc\\"):unesc(), "abc")
+	end;
+
+	["test: unesc(): Unescaping escaped string returns itself"] = function ()
+		ae(("a\\bc'"):esc():unesc(), "a\\bc'")
 	end;
 
 	-- TODO: Extract and split
