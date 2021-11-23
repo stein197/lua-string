@@ -6,6 +6,7 @@ local abcdef = "abcdef"
 local empty = ""
 local space = " "
 local blank = " 	"
+local whitespaced = "whitespaced"
 local ae = luaunit.assertEquals
 
 TestSplit = {
@@ -65,7 +66,7 @@ TestTrim = {
 	end;
 
 	["test: Default"] = function ()
-		ae((" a 	"):trim(), "a")
+		ae(whitespaced:trim(), "a")
 	end;
 
 	["test: Trimming specified char at single side"] = function ()
@@ -78,6 +79,28 @@ TestTrim = {
 
 	["test: Trimming group of chars"] = function ()
 		ae(abcdef:trim("fe%s"), "abcd")
+	end;
+}
+
+TestTrimStart = {
+	["test: Trimming empty string returns empty one"] = function ()
+		ae(empty:trimstart(), "")
+	end;
+
+	["test: Trimming blank string returns empty one"] = function ()
+		ae(blank:trimstart(), "")
+	end;
+
+	["test: Default"] = function ()
+		ae(whitespaced:trimstart(), "a 	")
+	end;
+
+	["test: Trimming specified char at single side"] = function ()
+		ae(abc:trimstart("a"), "bc")
+	end;
+
+	["test: Trimming group of chars"] = function ()
+		ae(abcdef:trimstart("ba%s"), "cdef")
 	end;
 }
 
