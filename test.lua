@@ -1,6 +1,7 @@
 require "."
 local luaunit = require "luaunit"
 
+local a = "a"
 local abc = "abc"
 local abcdef = "abcdef"
 local empty = ""
@@ -78,7 +79,7 @@ TestTrim = {
 	end;
 
 	["test: Trimming group of chars"] = function ()
-		ae(abcdef:trim("fe%s"), "abcd")
+		ae(("/path/?"):trim("/%?"), "path")
 	end;
 }
 
@@ -104,21 +105,29 @@ TestTrimStart = {
 	end;
 }
 
+TestTrimEnd = {
+	["test: Trimming empty string returns empty one"] = function ()
+		ae(empty:trimend(), "")
+	end;
+
+	["test: Trimming blank string returns empty one"] = function ()
+		ae(blank:trimend(), "")
+	end;
+
+	["test: Default"] = function ()
+		ae(whitespaced:trimend(), " a")
+	end;
+
+	["test: Trimming specified char at single side"] = function ()
+		ae(abc:trimend("c"), "ab")
+	end;
+
+	["test: Trimming group of chars"] = function ()
+		ae(abcdef:trimend("fe%s"), "abcd")
+	end;
+}
+
 TestString = {
-
-	["test: trimstart()"] = function ()
-		luaunit.assertEquals((""):trimstart(), "")
-		luaunit.assertEquals((" "):trimstart(), "")
-		luaunit.assertEquals((" a "):trimstart(), "a ")
-		luaunit.assertEquals(("aba"):trimstart("a"), "ba")
-	end;
-
-	["test: trimend()"] = function ()
-		luaunit.assertEquals((""):trimend(), "")
-		luaunit.assertEquals((" "):trimend(), "")
-		luaunit.assertEquals((" a "):trimend(), " a")
-		luaunit.assertEquals(("aba"):trimend("a"), "ab")
-	end;
 
 	["test: padstart()"] = function ()
 		luaunit.assertEquals((""):padstart(3, "0"), "000")
