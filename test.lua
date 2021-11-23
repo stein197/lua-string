@@ -283,18 +283,27 @@ TestString = {
 
 	end;
 
-	["test: startswith()"] = function ()
-		luaunit.assertTrue((""):startswith(""))
-		luaunit.assertTrue(("a"):startswith("a"))
-		luaunit.assertTrue(("abc"):startswith("ab"))
-		luaunit.assertFalse(("abc"):startswith("c"))
+	["test: startswith(): Calling with empty string always returns true"] = function ()
+		at(empty:startswith(""))
+		at(a:startswith(""))
+		at(abc:startswith(""))
+	end;
+	
+	["test: startswith(): Default"] = function ()
+		at(a:startswith("a"))
+		at(abc:startswith("ab"))
+		af(abc:startswith("c"))
+	end;
+	["test: endswith(): Calling with empty string always returns true"] = function ()
+		at(empty:endswith(""))
+		at(a:endswith(""))
+		at(abc:endswith(""))
 	end;
 
-	["test: endswith()"] = function ()
-		luaunit.assertTrue((""):endswith(""))
-		luaunit.assertTrue(("a"):endswith("a"))
-		luaunit.assertTrue(("abc"):endswith("bc"))
-		luaunit.assertFalse(("abc"):endswith("a"))
+	["test: endswith(): Default"] = function ()
+		at(a:endswith("a"))
+		at(abc:endswith("bc"))
+		af(abc:endswith("a"))
 	end;
 
 	["test: isempty(): Calling at empty string returns true"] = function ()
