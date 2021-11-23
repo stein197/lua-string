@@ -26,18 +26,18 @@ TestString = {
 		luaunit.assertEquals(("abcba"):trim("a"), "bcb")
 	end;
 
-	["test: trimleft()"] = function ()
-		luaunit.assertEquals((""):trimleft(), "")
-		luaunit.assertEquals((" "):trimleft(), "")
-		luaunit.assertEquals((" a "):trimleft(), "a ")
-		luaunit.assertEquals(("aba"):trimleft("a"), "ba")
+	["test: trimstart()"] = function ()
+		luaunit.assertEquals((""):trimstart(), "")
+		luaunit.assertEquals((" "):trimstart(), "")
+		luaunit.assertEquals((" a "):trimstart(), "a ")
+		luaunit.assertEquals(("aba"):trimstart("a"), "ba")
 	end;
 
-	["test: trimright()"] = function ()
-		luaunit.assertEquals((""):trimright(), "")
-		luaunit.assertEquals((" "):trimright(), "")
-		luaunit.assertEquals((" a "):trimright(), " a")
-		luaunit.assertEquals(("aba"):trimright("a"), "ab")
+	["test: trimend()"] = function ()
+		luaunit.assertEquals((""):trimend(), "")
+		luaunit.assertEquals((" "):trimend(), "")
+		luaunit.assertEquals((" a "):trimend(), " a")
+		luaunit.assertEquals(("aba"):trimend("a"), "ab")
 	end;
 
 	["test: padstart()"] = function ()
@@ -52,8 +52,8 @@ TestString = {
 		luaunit.assertEquals(("1"):padend(1, "0"), "1")
 	end;
 
-	["test: ensureleft()"] = function () error("Not implemented") end; -- TODO
-	["test: ensureright()"] = function () error("Not implemented") end; -- TODO
+	["test: ensurestart()"] = function () error("Not implemented") end; -- TODO
+	["test: ensureend()"] = function () error("Not implemented") end; -- TODO
 
 	["test: esc()"] = function ()
 		luaunit.assertEquals((""):esc(), "")

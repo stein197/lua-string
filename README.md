@@ -7,12 +7,12 @@ Table of contents
 	- [split](#split)
 	- [splitregex](#splitregex)
 	- [trim](#trim)
-	- [trimleft](#trimleft)
-	- [trimright](#trimright)
+	- [trimstart](#trimstart)
+	- [trimend](#trimend)
 	- [padstart](#padstart)
 	- [padend](#padend)
-	- [ensureleft](#ensureleft)
-	- [ensureright](#ensureright)
+	- [ensurestart](#ensurestart)
+	- [ensureend](#ensureend)
 	- [esc](#esc)
 	- [unesc](#unesc)
 	- [esc](#escregex)
@@ -63,20 +63,20 @@ Trims string's characters from its endings. Trims whitespaces by default
 (" /abc/"):trim("/ ") -- "abc"
 ```
 
-<a id="trimleft"></a>
+<a id="trimstart"></a>
 
-### trimleft(self, chars)
+### trimstart(self, chars)
 Trims string's characters from its left side. Trims whitespaces by default
 ```lua
-(" abc "):trimleft() -- "abc "
+(" abc "):trimstart() -- "abc "
 ```
 
-<a id="trimright"></a>
+<a id="trimend"></a>
 
-### trimright(self, chars)
+### trimend(self, chars)
 Trims string's characters from its right side. Trims whitespaces by default
 ```lua
-(" abc "):trimleft() -- " abc"
+(" abc "):trimstart() -- " abc"
 ```
 
 <a id="padstart"></a>
@@ -95,22 +95,22 @@ Pads string at the end with specified char until specified length. " " pad char 
 ("123"):padend(6, "-") -- "123---"
 ```
 
-<a id="ensureleft"></a>
+<a id="ensurestart"></a>
 
-### ensureleft(self, prefix)
+### ensurestart(self, prefix)
 If the string starts with prefix then returns string itself, otherwise pads the string until it starts the prefix
 ```lua
-("domain.com"):ensureleft("https://") -- "https://domain.com"
-("https://domain.com"):ensureleft("https://") -- "https://domain.com"
+("domain.com"):ensurestart("https://") -- "https://domain.com"
+("https://domain.com"):ensurestart("https://") -- "https://domain.com"
 ```
 
-<a id="ensureright"></a>
+<a id="ensureend"></a>
 
-### ensureright(self, suffix)
+### ensureend(self, suffix)
 If the string ends with prefix then returns string itself, otherwise pads the string until it ends the prefix
 ```lua
-("path"):ensureright("/") -- "path/"
-("path/"):ensureright("/") -- "path/"
+("path"):ensureend("/") -- "path/"
+("path/"):ensureend("/") -- "path/"
 ```
 
 <a id="esc"></a>

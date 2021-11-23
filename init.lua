@@ -59,16 +59,16 @@ end
 -- Trims string's characters from its endings. Trims whitespaces by default
 function string.trim(self, chars)
 	chars = chars or "%s"
-	return self:trimleft(chars):trimright(chars)
+	return self:trimstart(chars):trimend(chars)
 end
 
 -- Trims string's characters from its left side. Trims whitespaces by default
-function string.trimleft(self, chars)
+function string.trimstart(self, chars)
 	return self:gsub("^["..(chars or "%s").."]+", "")
 end
 
 -- Trims string's characters from its right side. Trims whitespaces by default
-function string.trimright(self, chars)
+function string.trimend(self, chars)
 	return self:gsub("["..(chars or "%s").."]+$", "")
 end
 
@@ -83,7 +83,7 @@ function string.padend(self, len, char)
 end
 
 -- If the string starts with prefix then returns string itself, otherwise pads the string until it starts the prefix
-function string.ensureleft(self, prefix)
+function string.ensurestart(self, prefix)
 	local prefixlen = prefix:len()
 	local left = self:sub(1, prefixlen)
 	local i = 1
@@ -95,7 +95,7 @@ function string.ensureleft(self, prefix)
 end
 
 -- If the string ends with prefix then returns string itself, otherwise pads the string until it ends the prefix
-function string.ensureright(self, suffix)
+function string.ensureend(self, suffix)
 	local suffixlen = suffix:len()
 	local right = self:sub(-suffixlen)
 	local i = suffixlen
