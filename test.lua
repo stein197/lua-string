@@ -32,17 +32,29 @@ TestSplit = {
 		ae(("-"):split("-"), {"", ""})
 		ae(("--"):split("-"), {"", "", ""})
 	end;
+
+	["test: Regex: Splitting empty string with empty one returns empty table"] = function()
+		ae(empty:split(empty, true), {})
+	end;
+
+	["test: Regex: Splitting by empty string returns table of chars"] = function ()
+		ae(abc:split(empty, true), {"a", "b", "c"})
+	end;
+
+	["test: Regex: Default"] = function ()
+		ae(("a b c"):split("%s", true), {"a", "b", "c"})
+	end;
+
+	["test: Regex: Splitting by multicharacter string"] = function ()
+		ae(("a, b,c"):split("%s*,%s*", true), {"a", "b", "c"})
+	end;
+
+	["test: Regex: Splitting repeating separators results in empty strings"] = function ()
+		ae(("a-b--c"):split("%-+", true), {"a", "b", "c"})
+	end;
 }
 
 TestString = {
-
-	["test: splitregex()"] = function ()
-		luaunit.assertEquals((""):split("", true), {})
-		luaunit.assertEquals(("abc"):split("", true), {"a", "b", "c"})
-		luaunit.assertEquals(("a b c"):split("%s", true), {"a", "b", "c"})
-		luaunit.assertEquals(("a, b,c"):split("%s*,%s*", true), {"a", "b", "c"})
-		luaunit.assertEquals(("a-b--c"):split("%-+", true), {"a", "b", "c"})
-	end;
 
 	["test: trim()"] = function ()
 		luaunit.assertEquals((""):trim(), "")
