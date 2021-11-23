@@ -78,7 +78,7 @@ function string.ensurestart(self, prefix)
 	end
 	local left = self:sub(1, prefixlen)
 	local i = 1
-	while not prefix:endswith(left) and i < prefixlen do
+	while not prefix:endswith(left) and i <= prefixlen do
 		i = i + 1
 		left = left:sub(1, -2)
 	end
