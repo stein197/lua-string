@@ -1,7 +1,7 @@
 # Lua standard string library extension
 The package extends default Lua's string library with several useful common methods which are present in most other languages. If you ever missed split, trim and other functions the this package provides such functions by extending Lua's default string library.
 
-Table of contents
+**Table of contents**
 - [Installation](#installation)
 - [Usage](#usage)
 - [API](#api)
