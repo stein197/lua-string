@@ -21,7 +21,7 @@ local function includes(tbl, item)
 	return false
 end
 
--- Splits string by supplied separator
+-- Splits string by supplied separator. If the `regex` parameter is set to true then the separator is considered as a regular expression
 function string.split(self, sep, regex)
 	if sep == "" then
 		return self:totable()
@@ -40,37 +40,37 @@ function string.split(self, sep, regex)
 	return result
 end
 
--- Trims string's characters from its endings. Trims whitespaces by default
+-- Trims string's characters from its endings. Trims whitespaces by default. The `chars` argument is a regex string containing which characters to trim
 function string.trim(self, chars)
 	chars = chars or "%s"
 	return self:trimstart(chars):trimend(chars)
 end
 
--- Trims string's characters from its left side. Trims whitespaces by default
+-- Trims string's characters from its left side. Trims whitespaces by default. The `chars` argument is a regex string containing which characters to trim
 function string.trimstart(self, chars)
 	return self:gsub("^["..(chars or "%s").."]+", "")
 end
 
--- Trims string's characters from its right side. Trims whitespaces by default
+-- Trims string's characters from its right side. Trims whitespaces by default. The `chars` argument is a regex string containing which characters to trim
 function string.trimend(self, chars)
 	return self:gsub("["..(chars or "%s").."]+$", "")
 end
 
--- Pads string at the start with specified char until specified length. " " pad char by default
+-- Pads string at the start with specified string until specified length. " " pad string by default
 function string.padstart(self, len, str)
 	str = str or " "
 	local selflen = self:len()
 	return (str:rep(math.ceil((len - selflen) / str:len()))..self):sub(-(selflen < len and len or selflen))
 end
 
--- Pads string at the end with specified char until specified length. " " pad char by default
+-- Pads string at the end with specified string until specified length. " " pad string by default
 function string.padend(self, len, str)
 	str = str or " "
 	local selflen = self:len()
 	return (self..str:rep(math.ceil((len - selflen) / str:len()))):sub(1, selflen < len and len or selflen)
 end
 
--- If the string starts with prefix then returns string itself, otherwise pads the string until it starts the prefix
+-- If the string starts with specified prefix then returns string itself, otherwise pads the string until it starts with the prefix
 function string.ensurestart(self, prefix)
 	local prefixlen = prefix:len()
 	if prefixlen > self:len() then
@@ -85,7 +85,7 @@ function string.ensurestart(self, prefix)
 	return prefix:sub(1, i - 1)..self
 end
 
--- If the string ends with prefix then returns string itself, otherwise pads the string until it ends the prefix
+-- If the string ends with specified prefix then returns string itself, otherwise pads the string until it ends with the prefix
 function string.ensureend(self, suffix)
 	local suffixlen = suffix:len()
 	if suffixlen > self:len() then
@@ -100,8 +100,7 @@ function string.ensureend(self, suffix)
 	return self..suffix:sub(i + 1)
 end
 
--- Adds backslashes before ", ' and \ characters. Escape character can be specified ("\\" by default) as well as
--- characters to escape ({"\"", "'", "\\"} by default)
+-- Adds backslashes before ", ' and \ characters. Escape character can be specified ("\\" by default) as well as characters to escape ({"\"", "'", "\\"} by default)
 function string.esc(self, eschar, eschartbl)
 	local result = ""
 	eschar = eschar or "\\"
@@ -130,7 +129,7 @@ function string.unesc(self, eschar)
 	return result
 end
 
--- Escapes regexp special characters so the can be used in regexp function as is
+-- Escapes regexp special characters so the can be used in regexp functions as is
 function string.escregex(self)
 	return self:esc("%", escregexchars)
 end
@@ -159,17 +158,17 @@ function string.truncate(self, len, suffix)
 	end
 end
 
--- Returns true if string starts with specified string
+-- Returns true if the string starts with specified string
 function string.startswith(self, prefix)
 	return self:sub(0, prefix:len()) == prefix
 end
 
--- Returns true if string ends with specified string
+-- Returns true if the string ends with specified string
 function string.endswith(self, suffix)
 	return self:sub(self:len() - suffix:len() + 1) == suffix
 end
 
--- Returns true if string length is 0
+-- Returns true if string's length is 0
 function string.isempty(self)
 	return self:len() == 0
 end
@@ -179,8 +178,7 @@ function string.isblank(self)
 	return self:match("^%s*$") ~= nil
 end
 
--- Converts "1", "true", "on", "yes", "y" and their contraries into real boolean. Returns nil if casting cannot be done.
--- Case-insensetive
+-- Converts "1", "true", "on", "yes", "y" and their contraries into real boolean. Returns nil if casting cannot be done. Case-insensetive
 function string.tobool(self)
 	local lowered = self:lower()
 	for truthy, falsy in pairs(boolvalues) do
