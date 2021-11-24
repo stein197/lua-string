@@ -48,6 +48,8 @@ require ""
 ### split(self, sep, regex)
 Splits string by supplied separator. If the `regex` parameter is set to true then the separator is considered as a regular expression
 ```lua
+("a b c"):split(" ") -- {"a", "b", "c"}
+("a,b, c"):split("%s*,%s*", true) -- {"a", "b", "c"}
 ```
 
 <a id="trim"></a>
@@ -55,6 +57,8 @@ Splits string by supplied separator. If the `regex` parameter is set to true the
 ### trim(self, chars)
 Trims string's characters from its endings. Trims whitespaces by default. The `chars` argument is a regex string containing which characters to trim
 ```lua
+(" abc "):trim() -- "abc"
+(" abc !"):trim("! ") -- "abc"
 ```
 
 <a id="trimstart"></a>
@@ -62,6 +66,8 @@ Trims string's characters from its endings. Trims whitespaces by default. The `c
 ### trimstart(self, chars)
 Trims string's characters from its left side. Trims whitespaces by default. The `chars` argument is a regex string containing which characters to trim
 ```lua
+(" abc "):trimstart() -- "abc "
+(" abc !"):trimstart("! ") -- "abc !"
 ```
 
 <a id="trimend"></a>
@@ -69,6 +75,8 @@ Trims string's characters from its left side. Trims whitespaces by default. The 
 ### trimend(self, chars)
 Trims string's characters from its right side. Trims whitespaces by default. The `chars` argument is a regex string containing which characters to trim
 ```lua
+(" abc "):trimend() -- " abc"
+(" abc !"):trimend("! ") -- " abc"
 ```
 
 <a id="padstart"></a>
@@ -76,6 +84,8 @@ Trims string's characters from its right side. Trims whitespaces by default. The
 ### padstart(self, len, str)
 Pads string at the start with specified string until specified length. `" "` pad string by default
 ```lua
+("1"):padstart(3) -- "  1"
+("1"):padstart(3, "0") -- "001"
 ```
 
 <a id="padend"></a>
@@ -83,6 +93,8 @@ Pads string at the start with specified string until specified length. `" "` pad
 ### padend(self, len, str)
 Pads string at the end with specified string until specified length. `" "` pad string by default
 ```lua
+("1"):padend(3) -- "1  "
+("1"):padend(3, "0") -- "100"
 ```
 
 <a id="ensurestart"></a>
@@ -90,6 +102,8 @@ Pads string at the end with specified string until specified length. `" "` pad s
 ### ensurestart(self, prefix)
 If the string starts with specified prefix then returns string itself, otherwise pads the string until it starts with the prefix
 ```lua
+("domain.com"):ensurestart("https://") -- "https://domain.com"
+("https://domain.com"):ensurestart("https://") -- "https://domain.com"
 ```
 
 <a id="ensureend"></a>
@@ -97,6 +111,8 @@ If the string starts with specified prefix then returns string itself, otherwise
 ### ensureend(self, suffix)
 If the string ends with specified prefix then returns string itself, otherwise pads the string until it ends with the prefix
 ```lua
+("path"):ensureend("/") -- "path/"
+("path/"):ensureend("/") -- "path/"
 ```
 
 <a id="esc"></a>
@@ -104,6 +120,8 @@ If the string ends with specified prefix then returns string itself, otherwise p
 ### esc(self, eschar, eschartbl)
 Adds backslashes before `"`, `'` and `\` characters. Escape character can be specified (`"\\"` by default) as well as characters to escape (`{"\"", "'", "\\"}` by default)
 ```lua
+("Quote'"):esc() -- "Quote\\'"
+("string%"):esc("#", {"%"}) -- "string#%"
 ```
 
 <a id="unesc"></a>
@@ -111,6 +129,8 @@ Adds backslashes before `"`, `'` and `\` characters. Escape character can be spe
 ### unesc(self, eschar)
 Strips backslashes from the string. Escape character can be specified (`"\\"` by default)
 ```lua
+("Quote\\'"):unesc() -- "Quote'"
+("string#%"):unesc("#") -- "string%"
 ```
 
 <a id="escregex"></a>
@@ -118,6 +138,7 @@ Strips backslashes from the string. Escape character can be specified (`"\\"` by
 ### escregex(self)
 Escapes regexp special characters so the can be used in regexp functions as is
 ```lua
+("^[abc]"):escregex() -- "%^%[abc%]"
 ```
 
 <a id="unescregex"></a>
@@ -125,27 +146,37 @@ Escapes regexp special characters so the can be used in regexp functions as is
 ### unescregex(self)
 Unescapes regexp special characters
 ```lua
+("%^%[abc%]"):escregex() -- "^[abc]"
 ```
 
 <a id="iter"></a>
 
 ### iter(self)
- Returns an iterator which can be used in for loops
- ```lua
- ```
+Returns an iterator which can be used in for loops
+```lua
+for _, char in ("abc"):iter() do
+	print(char)
+end
+> a
+> b
+> c
+```
 
 <a id="truncate"></a>
 
 ### truncate(self, len, suffix)
- Truncates string to a specified length with optional suffix (usually `"..."`, nil by default)
- ```lua
- ```
+Truncates string to a specified length with optional suffix (usually `"..."`, nil by default)
+```lua
+("string"):truncate(3) -- "str"
+("string"):truncate(5, "...") -- "st..."
+```
 
 <a id="startswith"></a>
 
 ### startswith(self, prefix)
 Returns true if the string starts with specified string
 ```lua
+("string"):startswith("str") -- true
 ```
 
 <a id="endswith"></a>
@@ -153,6 +184,7 @@ Returns true if the string starts with specified string
 ### endswith(self, suffix)
 Returns true if the string ends with specified string
 ```lua
+("string"):endswith("ing") -- true
 ```
 
 <a id="isempty"></a>
@@ -160,6 +192,7 @@ Returns true if the string ends with specified string
 ### isempty(self)
 Returns true if string's length is 0
 ```lua
+(""):isempty() -- true
 ```
 
 <a id="isblank"></a>
@@ -167,6 +200,7 @@ Returns true if string's length is 0
 ### isblank(self)
 Returns true if string consists of whitespace characters
 ```lua
+(" "):isblank() -- true
 ```
 
 <a id="tobool"></a>
@@ -174,6 +208,9 @@ Returns true if string consists of whitespace characters
 ### tobool(self)
 Converts `"1"`, `"true"`, `"on"`, `"yes"`, `"y"` and their contraries into real boolean. Returns nil if casting cannot be done. Case-insensetive
 ```lua
+("true"):tobool() -- true
+("off"):tobool() -- false
+("string"):tobool() -- nil
 ```
 
 <a id="totable"></a>
@@ -181,6 +218,7 @@ Converts `"1"`, `"true"`, `"on"`, `"yes"`, `"y"` and their contraries into real 
 ### totable(self)
 Returns table containing all the chars in the string
 ```lua
+("abc"):totable() -- {"a", "b", "c"}
 ```
 
 
