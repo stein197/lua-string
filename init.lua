@@ -153,7 +153,7 @@ end
 function string.truncate(self, len, suffix)
 	if suffix then
 		local newlen = len - suffix:len()
-		return 0 <= newlen and newlen < self:len() and self:sub(1, newlen)..suffix or self:sub(1, len)
+		return 0 < newlen and newlen < self:len() and self:sub(1, newlen)..suffix or self:sub(1, len)
 	else
 		return self:sub(1, len)
 	end
