@@ -288,7 +288,6 @@ TestString = {
 		ae(("a\\bc'"):esc():unesc(), "a\\bc'")
 	end;
 
-	-- TODO: Extract and split
 	["test: escregex()"] = function ()
 		luaunit.assertEquals((""):escregex(), "")
 		luaunit.assertEquals(("."):escregex(), "%.")
@@ -318,7 +317,6 @@ TestString = {
 		luaunit.assertEquals((".%a%c%d%g%l%p%s%u%w%x().%+-*?[]^$"):escregex(), "%.%%a%%c%%d%%g%%l%%p%%s%%u%%w%%x%(%)%.%%%+%-%*%?%[%]%^%$")
 	end;
 
-	-- TODO: Extract and split
 	["test: unescregex()"] = function ()
 		luaunit.assertEquals((""):unescregex(), "")
 		luaunit.assertEquals(("%."):unescregex(), ".")
@@ -364,26 +362,55 @@ TestString = {
 		luaunit.assertEquals(r, {"a", "b", "c"})
 	end;
 
-	-- TODO: Extract and split
-	["test: truncate()"] = function ()
-		luaunit.assertEquals((""):truncate(1), "")
-		luaunit.assertEquals((""):truncate(1, "..."), "")
-		luaunit.assertEquals((""):truncate(0), "")
-		luaunit.assertEquals((""):truncate(-1), "")
+	["test: truncate(): Truncating empty string always returns empty one"] = function ()
+		ae(empty:truncate(1), "")
+		ae(empty:truncate(0), "")
+		ae(empty:truncate(-1), "")
+		ae(empty:truncate(1, ""), "")
+		ae(empty:truncate(0, ""), "")
+		ae(empty:truncate(-1, ""), "")
+		ae(empty:truncate(1, "..."), "")
+		ae(empty:truncate(0, "..."), "")
+		ae(empty:truncate(-1, "..."), "")
+	end;
 
-		luaunit.assertEquals(("a"):truncate(1), "a")
-		luaunit.assertEquals(("a"):truncate(2), "a")
-		luaunit.assertEquals(("a"):truncate(1, "..."), "a")
-		luaunit.assertEquals(("a"):truncate(0), "")
-		luaunit.assertEquals(("a"):truncate(-1), "a")
+	["test: truncate(): Truncating single character always returns either character itself or an empty one"] = function ()
+		ae(a:truncate(1), "a")
+		ae(a:truncate(0), "")
+		ae(a:truncate(-1), "a")
+		ae(a:truncate(1, ""), "a")
+		ae(a:truncate(0, ""), "")
+		ae(a:truncate(-1, ""), "a")
+		ae(a:truncate(1, "b"), "a")
+		ae(a:truncate(0, "b"), "")
+		ae(a:truncate(-1, "b"), "a")
+		ae(a:truncate(1, "..."), "a")
+		ae(a:truncate(0, "..."), "")
+		ae(a:truncate(-1, "..."), "a")
+	end;
 
-		luaunit.assertEquals(("abcdef"):truncate(3), "abc")
-		luaunit.assertEquals(("abcdef"):truncate(6, "..."), "abc...")
-		luaunit.assertEquals(("abcdef"):truncate(100, "..."), "abcdef")
+	["test: truncate(): Default"] = function ()
+		ae(abcdef:truncate(3), "abc")
+	end;
+
+	["test: truncate(): Truncating the string to it's length returns the string itself"] = function ()
+		ae(abcdef:truncate(6), "abcdef")
+	end;
+
+	["test: truncate(): Truncating the string to it's length with prefix"] = function ()
+		ae(abcdef:truncate(6, "..."), "abc...")
+	end;
+
+	["test: truncate(): Truncating the string to large length returns the string itself"] = function ()
+		ae(abcdef:truncate(100), "abcdef")
+	end;
+
+	["test: truncate(): Truncating the string to large length with prefix returns the string itself"] = function ()
+		ae(abcdef:truncate(100, "..."), "abcdef")
+	end;
+
+	["test: truncate(): Truncating the string to a total length with prefix returns the string itself"] = function ()
 		luaunit.assertEquals(("abcdef"):truncate(9, "..."), "abcdef")
-		luaunit.assertEquals(("abcdef"):truncate(0), "")
-		luaunit.assertEquals(("abcdef"):truncate(-1), "abcdef")
-
 	end;
 
 	["test: startswith(): Calling with empty string always returns true"] = function ()
