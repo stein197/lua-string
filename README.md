@@ -154,7 +154,7 @@ Unescapes regexp special characters
 ### iter(self)
 Returns an iterator which can be used in for loops
 ```lua
-for _, char in ("abc"):iter() do
+for char in ("abc"):iter() do
 	print(char)
 end
 > a
