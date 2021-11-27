@@ -30,14 +30,14 @@ The package extends default Lua's string library with several useful common meth
 ## Installation
 Via LuaRocks:
 ```
-luarocks install <>
+luarocks install lua-string
 ```
 Or just download and require `init.lua` file from this repo.
 
 ## Usage
 Just require it in the code like in the example below:
 ```lua
-require ""
+require "lua-string" -- It will extend the default string library
 ("Hello world!"):trimend("!"):sub(6):trim():totable() -- {"H", "e", "l", "l", "o"}
 ```
 
