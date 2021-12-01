@@ -72,17 +72,8 @@ end
 
 -- If the string starts with specified prefix then returns string itself, otherwise pads the string until it starts with the prefix
 function string.ensurestart(self, prefix)
-	local prefixlen = prefix:len()
-	if prefixlen > self:len() then
-		return prefix:ensureend(self)
-	end
-	local left = self:sub(1, prefixlen)
-	local i = 1
-	while not prefix:endswith(left) and i <= prefixlen do
-		i = i + 1
-		left = left:sub(1, -2)
-	end
-	return prefix:sub(1, i - 1)..self
+	local a = self:find( prefix,1,true )
+	return a and self:sub(a) or prefix .. self
 end
 
 -- If the string ends with specified prefix then returns string itself, otherwise pads the string until it ends with the prefix
