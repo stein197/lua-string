@@ -19,8 +19,10 @@ The package extends default Lua's string library with several useful common meth
 	- [ensureend](#ensureend)
 	- [esc](#esc)
 	- [unesc](#unesc)
-	- [escregex](#escregex)
-	- [unescregex](#unescregex)
+	- [escpattern](#escpattern)
+	- [unescpattern](#unescpattern)
+	- [escregex (Deprecated)](#escregex)
+	- [unescregex (Deprecated)](#unescregex)
 	- [iter](#iter)
 	- [truncate](#truncate)
 	- [startswith](#startswith)
@@ -137,10 +139,26 @@ Strips backslashes from the string. Escape character can be specified (`"\\"` by
 ("string#%"):unesc("#") -- "string%"
 ```
 
+<a id="escpattern"></a>
+
+### escpattern(self)
+Escapes pattern special characters so the can be used in pattern matching functions as is
+```lua
+("^[abc]"):escpattern() -- "%^%[abc%]"
+```
+
+<a id="unescpattern"></a>
+
+### unescpattern(self)
+Unescapes pattern special characters
+```lua
+("%^%[abc%]"):unescpattern() -- "^[abc]"
+```
+
 <a id="escregex"></a>
 
 ### escregex(self)
-Escapes regexp special characters so the can be used in regexp functions as is
+Escapes regexp special characters so the can be used in regexp functions as is. Deprecated, use `escpattern` instead
 ```lua
 ("^[abc]"):escregex() -- "%^%[abc%]"
 ```
@@ -148,9 +166,9 @@ Escapes regexp special characters so the can be used in regexp functions as is
 <a id="unescregex"></a>
 
 ### unescregex(self)
-Unescapes regexp special characters
+Unescapes regexp special characters. Deprecated, use `unescpattern` instead
 ```lua
-("%^%[abc%]"):escregex() -- "^[abc]"
+("%^%[abc%]"):unescregex() -- "^[abc]"
 ```
 
 <a id="iter"></a>
@@ -235,4 +253,3 @@ Then run from the console:
 ```
 lua test.lua
 ```
-Make sure that `luaunit` package can be required using `package.path` variable.

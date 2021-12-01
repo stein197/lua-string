@@ -129,12 +129,24 @@ function string.unesc(self, eschar)
 	return result
 end
 
+-- Escapes pattern special characters so the can be used in pattern matching functions as is
+function string.escpattern(self)
+	return self:esc("%", escregexchars)
+end
+
+-- Unescapes pattern special characters
+function string.unescpattern(self)
+	return self:unesc("%")
+end
+
 -- Escapes regexp special characters so the can be used in regexp functions as is
+--- @deprecated
 function string.escregex(self)
 	return self:esc("%", escregexchars)
 end
 
 -- Unescapes regexp special characters
+--- @deprecated
 function string.unescregex(self)
 	return self:unesc("%")
 end

@@ -1,4 +1,4 @@
-require "."
+require ""
 local luaunit = require "luaunit"
 
 local a = "a"
@@ -286,6 +286,64 @@ TestString = {
 
 	["test: unesc(): Unescaping escaped string returns itself"] = function ()
 		ae(("a\\bc'"):esc():unesc(), "a\\bc'")
+	end;
+
+	["test: escpattern()"] = function ()
+		luaunit.assertEquals((""):escpattern(), "")
+		luaunit.assertEquals(("."):escpattern(), "%.")
+		luaunit.assertEquals(("%a"):escpattern(), "%%a")
+		luaunit.assertEquals(("%c"):escpattern(), "%%c")
+		luaunit.assertEquals(("%d"):escpattern(), "%%d")
+		luaunit.assertEquals(("%g"):escpattern(), "%%g")
+		luaunit.assertEquals(("%l"):escpattern(), "%%l")
+		luaunit.assertEquals(("%p"):escpattern(), "%%p")
+		luaunit.assertEquals(("%s"):escpattern(), "%%s")
+		luaunit.assertEquals(("%u"):escpattern(), "%%u")
+		luaunit.assertEquals(("%w"):escpattern(), "%%w")
+		luaunit.assertEquals(("%x"):escpattern(), "%%x")
+		luaunit.assertEquals(("("):escpattern(), "%(")
+		luaunit.assertEquals((")"):escpattern(), "%)")
+		luaunit.assertEquals(("."):escpattern(), "%.")
+		luaunit.assertEquals(("%"):escpattern(), "%%")
+		luaunit.assertEquals(("%"):escpattern():escpattern(), "%%%%")
+		luaunit.assertEquals(("+"):escpattern(), "%+")
+		luaunit.assertEquals(("-"):escpattern(), "%-")
+		luaunit.assertEquals(("*"):escpattern(), "%*")
+		luaunit.assertEquals(("?"):escpattern(), "%?")
+		luaunit.assertEquals(("["):escpattern(), "%[")
+		luaunit.assertEquals(("]"):escpattern(), "%]")
+		luaunit.assertEquals(("^"):escpattern(), "%^")
+		luaunit.assertEquals(("$"):escpattern(), "%$")
+		luaunit.assertEquals((".%a%c%d%g%l%p%s%u%w%x().%+-*?[]^$"):escpattern(), "%.%%a%%c%%d%%g%%l%%p%%s%%u%%w%%x%(%)%.%%%+%-%*%?%[%]%^%$")
+	end;
+	
+	["test: unescpattern()"] = function ()
+		luaunit.assertEquals((""):unescpattern(), "")
+		luaunit.assertEquals(("%."):unescpattern(), ".")
+		luaunit.assertEquals(("%%a"):unescpattern(), "%a")
+		luaunit.assertEquals(("%%c"):unescpattern(), "%c")
+		luaunit.assertEquals(("%%d"):unescpattern(), "%d")
+		luaunit.assertEquals(("%%g"):unescpattern(), "%g")
+		luaunit.assertEquals(("%%l"):unescpattern(), "%l")
+		luaunit.assertEquals(("%%p"):unescpattern(), "%p")
+		luaunit.assertEquals(("%%s"):unescpattern(), "%s")
+		luaunit.assertEquals(("%%u"):unescpattern(), "%u")
+		luaunit.assertEquals(("%%w"):unescpattern(), "%w")
+		luaunit.assertEquals(("%%x"):unescpattern(), "%x")
+		luaunit.assertEquals(("%("):unescpattern(), "(")
+		luaunit.assertEquals(("%)"):unescpattern(), ")")
+		luaunit.assertEquals(("%."):unescpattern(), ".")
+		luaunit.assertEquals(("%%"):unescpattern(), "%")
+		luaunit.assertEquals(("%%%%"):unescpattern():unescpattern(), "%")
+		luaunit.assertEquals(("%+"):unescpattern(), "+")
+		luaunit.assertEquals(("%-"):unescpattern(), "-")
+		luaunit.assertEquals(("%*"):unescpattern(), "*")
+		luaunit.assertEquals(("%?"):unescpattern(), "?")
+		luaunit.assertEquals(("%["):unescpattern(), "[")
+		luaunit.assertEquals(("%]"):unescpattern(), "]")
+		luaunit.assertEquals(("%^"):unescpattern(), "^")
+		luaunit.assertEquals(("%$"):unescpattern(), "$")
+		luaunit.assertEquals(("%.%%a%%c%%d%%g%%l%%p%%s%%u%%w%%x%(%)%.%%%+%-%*%?%[%]%^%$"):unescpattern(), ".%a%c%d%g%l%p%s%u%w%x().%+-*?[]^$")
 	end;
 
 	["test: escregex()"] = function ()
