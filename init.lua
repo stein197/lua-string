@@ -22,7 +22,7 @@ local function includes(tbl, item)
 end
 
 -- Splits string by supplied separator. If the `regex` parameter is set to true then the separator is considered as a regular expression
-function string.split(self, sep, regex)
+function string:split(sep, regex)
 	if sep == "" then
 		return self:totable()
 	end
@@ -41,37 +41,37 @@ function string.split(self, sep, regex)
 end
 
 -- Trims string's characters from its endings. Trims whitespaces by default. The `chars` argument is a regex string containing which characters to trim
-function string.trim(self, chars)
+function string:trim(chars)
 	chars = chars or "%s"
 	return self:trimstart(chars):trimend(chars)
 end
 
 -- Trims string's characters from its left side. Trims whitespaces by default. The `chars` argument is a regex string containing which characters to trim
-function string.trimstart(self, chars)
+function string:trimstart(chars)
 	return self:gsub("^["..(chars or "%s").."]+", "")
 end
 
 -- Trims string's characters from its right side. Trims whitespaces by default. The `chars` argument is a regex string containing which characters to trim
-function string.trimend(self, chars)
+function string:trimend(chars)
 	return self:gsub("["..(chars or "%s").."]+$", "")
 end
 
 -- Pads string at the start with specified string until specified length. " " pad string by default
-function string.padstart(self, len, str)
+function string:padstart(len, str)
 	str = str or " "
 	local selflen = self:len()
 	return (str:rep(math.ceil((len - selflen) / str:len()))..self):sub(-(selflen < len and len or selflen))
 end
 
 -- Pads string at the end with specified string until specified length. " " pad string by default
-function string.padend(self, len, str)
+function string:padend(len, str)
 	str = str or " "
 	local selflen = self:len()
 	return (self..str:rep(math.ceil((len - selflen) / str:len()))):sub(1, selflen < len and len or selflen)
 end
 
 -- If the string starts with specified prefix then returns string itself, otherwise pads the string until it starts with the prefix
-function string.ensurestart(self, prefix)
+function string:ensurestart(prefix)
 	local prefixlen = prefix:len()
 	if prefixlen > self:len() then
 		return prefix:ensureend(self)
@@ -86,7 +86,7 @@ function string.ensurestart(self, prefix)
 end
 
 -- If the string ends with specified prefix then returns string itself, otherwise pads the string until it ends with the prefix
-function string.ensureend(self, suffix)
+function string:ensureend(suffix)
 	local suffixlen = suffix:len()
 	if suffixlen > self:len() then
 		return suffix:ensurestart(self)
@@ -101,7 +101,7 @@ function string.ensureend(self, suffix)
 end
 
 -- Adds backslashes before ", ' and \ characters. Escape character can be specified ("\\" by default) as well as characters to escape ({"\"", "'", "\\"} by default)
-function string.esc(self, eschar, eschartbl)
+function string:esc(eschar, eschartbl)
 	local result = ""
 	eschar = eschar or "\\"
 	eschartbl = eschartbl or eschars
@@ -112,7 +112,7 @@ function string.esc(self, eschar, eschartbl)
 end
 
 -- Strips backslashes from the string. Escape character can be specified ("\\" by default)
-function string.unesc(self, eschar)
+function string:unesc(eschar)
 	local result = ""
 	local i = 0
 	eschar = eschar or "\\"
@@ -130,29 +130,29 @@ function string.unesc(self, eschar)
 end
 
 -- Escapes pattern special characters so the can be used in pattern matching functions as is
-function string.escpattern(self)
+function string:escpattern()
 	return self:esc("%", escregexchars)
 end
 
 -- Unescapes pattern special characters
-function string.unescpattern(self)
+function string:unescpattern()
 	return self:unesc("%")
 end
 
 -- Escapes regexp special characters so the can be used in regexp functions as is
 --- @deprecated
-function string.escregex(self)
+function string:escregex()
 	return self:esc("%", escregexchars)
 end
 
 -- Unescapes regexp special characters
 --- @deprecated
-function string.unescregex(self)
+function string:unescregex()
 	return self:unesc("%")
 end
 
 --- Returns an iterator which can be used in for loops
-function string.iter(self)
+function string:iter()
 	local i = 0
 	return function ()
 		i = i + 1
@@ -161,7 +161,7 @@ function string.iter(self)
 end
 
 --- Truncates string to a specified length with optional suffix (usually "...", nil by default)
-function string.truncate(self, len, suffix)
+function string:truncate(len, suffix)
 	if suffix then
 		local newlen = len - suffix:len()
 		return 0 < newlen and newlen < self:len() and self:sub(1, newlen)..suffix or self:sub(1, len)
@@ -171,27 +171,27 @@ function string.truncate(self, len, suffix)
 end
 
 -- Returns true if the string starts with specified string
-function string.startswith(self, prefix)
+function string:startswith(prefix)
 	return self:sub(0, prefix:len()) == prefix
 end
 
 -- Returns true if the string ends with specified string
-function string.endswith(self, suffix)
+function string:endswith(suffix)
 	return self:sub(self:len() - suffix:len() + 1) == suffix
 end
 
 -- Returns true if string's length is 0
-function string.isempty(self)
+function string:isempty()
 	return self:len() == 0
 end
 
 -- Returns true if string consists of whitespace characters
-function string.isblank(self)
+function string:isblank()
 	return self:match("^%s*$") ~= nil
 end
 
 -- Converts "1", "true", "on", "yes", "y" and their contraries into real boolean. Returns nil if casting cannot be done. Case-insensetive
-function string.tobool(self)
+function string:tobool()
 	local lowered = self:lower()
 	for truthy, falsy in pairs(boolvalues) do
 		if lowered == truthy then
@@ -204,7 +204,7 @@ function string.tobool(self)
 end
 
 -- Returns table containing all the chars in the string
-function string.totable(self)
+function string:totable()
 	local result = {}
 	for ch in self:iter() do
 		table.insert(result, ch)
