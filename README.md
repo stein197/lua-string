@@ -1,8 +1,8 @@
 # Lua standard string library extension
-![](https://img.shields.io/github/license/stein197/lua-string)
+[![](https://img.shields.io/github/license/stein197/lua-string)](LICENSE)
 ![](https://img.shields.io/github/v/tag/stein197/lua-string?label=Version)
-![](https://img.shields.io/luarocks/v/stein197/lua-string)
-![](https://img.shields.io/github/size/stein197/lua-string/init.lua)
+[![](https://img.shields.io/luarocks/v/stein197/lua-string)](https://luarocks.org/modules/stein197/lua-string)
+[![](https://img.shields.io/github/size/stein197/lua-string/init.lua)](init.lua)
 
 The package extends default Lua's string library with several useful common methods which are present in most other languages. If you ever missed split, trim and other functions the this package provides such functions by extending Lua's default string library.
 
