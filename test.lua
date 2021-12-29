@@ -15,6 +15,68 @@ local af = luaunit.assertFalse
 
 TestString = {
 
+	["test: __mul(): Multiplying by 0 returns empty string"] = function ()
+		luaunit.assertEquals(abc * 0, "")
+		luaunit.assertEquals(0 * abc, "")
+	end;
+
+	["test: __mul(): Multiplying by 1 returns the original string"] = function ()
+		luaunit.assertEquals(abc * 1, "abc")
+		luaunit.assertEquals(1 * abc, "abc")
+	end;
+
+	["test: __mul(): Multiplying returns correct string"] = function ()
+		luaunit.assertEquals(abc * 3, "abcabcabc")
+		luaunit.assertEquals(3 * abc, "abcabcabc")
+	end;
+
+	["test: __mul(): Multiplying an empty string n times returns empty one"] = function ()
+		luaunit.assertEquals(empty * 100, "")
+		luaunit.assertEquals(100 * empty, "")
+	end;
+
+	["test: __index(): Accessing with 0 returns nil"] = function ()
+		luaunit.assertNil(abcdef[0])
+	end;
+
+	["test: __index(): Accessing with 1 returns the first character"] = function ()
+		luaunit.assertEquals(abcdef[1], "a")
+	end;
+
+	["test: __index(): Accessing with an ordinary positive index"] = function ()
+		luaunit.assertEquals(abcdef[3], "c")
+	end;
+
+	["test: __index(): Accessing with max positive index returns the last character"] = function ()
+		luaunit.assertEquals(abcdef[6], "f")
+	end;
+
+	["test: __index(): Accessing with positive index larger than string's length returns nil"] = function ()
+		luaunit.assertNil(abcdef[7])
+	end;
+
+	["test: __index(): Accessing with -1 returns the last character"] = function ()
+		luaunit.assertEquals(abcdef[-1], "f")
+	end;
+
+	["test: __index(): Accessing with an ordinary negative index"] = function ()
+		luaunit.assertEquals(abcdef[-3], "d")
+	end;
+
+	["test: __index(): Accessing with min negative index returns the first character"] = function ()
+		luaunit.assertEquals(abcdef[-6], "a")
+	end;
+
+	["test: __index(): Accessing with negative index large than string's length returns nil"] = function ()
+		luaunit.assertNil(abcdef[-7])
+	end;
+
+	["test: __index(): Accessing with any index in empty string returns nil"] = function ()
+		luaunit.assertNil(empty[0])
+		luaunit.assertNil(empty[1])
+		luaunit.assertNil(empty[-1])
+	end;
+
 	["test: split(): Splitting empty string with empty one returns empty table"] = function()
 		ae(empty:split(empty), {})
 	end;

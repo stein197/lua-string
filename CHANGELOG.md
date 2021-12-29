@@ -3,7 +3,7 @@
 
 ## [1.2.0](../../compare/1.1.0..1.2.0) - XXXX-XX-XX
 ### Added
-- Metamethods `__mul()`, `__call()`, `__index()` and `__newindex()`
+- Metamethods `__mul()`, `__index()` and `__newindex()`
 ### Changed
 - Replaced comments in source code with doc ones
 

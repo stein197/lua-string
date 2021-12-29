@@ -25,6 +25,8 @@ local function includes(tbl, item)
 end
 
 --- Overloads `*` operator. Works the same as `string.rep()` function.
+--- @param n number Multiplier.
+--- @return string rs String multiplied `n` times.
 function mt:__mul(n)
 	if type(self) == "number" then
 		return n * self
@@ -35,13 +37,17 @@ function mt:__mul(n)
 	return self:rep(n)
 end
 
---- Overloads `()` operator. Works the same as `string.iter()` function.
-function mt:__call()
-	return self:iter()
-end
-
--- TODO
+--- Overloads `[]` operator. It's possible to access individual chars with this operator. Index could be negative. In
+--- that case the counting will start from the end.
+--- @param i number Index at which retrieve a char.
+--- @return string ch Single character at specified index. Nil if the index is larger than length of the string.
 function mt:__index(i)
+	if string[i] then
+		return string[i]
+	end
+	i = i < 0 and #self + i + 1 or i
+	local rs = self:sub(i, i)
+	return #rs > 0 and rs or nil
 end
 
 -- TODO
