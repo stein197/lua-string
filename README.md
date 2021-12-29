@@ -6,6 +6,8 @@
 
 The package extends default Lua's string library with several useful common methods which are present in most other languages. If you ever missed split, trim and other functions the this package provides such functions by extending Lua's default string library.
 
+<!-- TODO: Change order or listing to alphabetical -->
+<!-- TODO: Add documentation for new methods -->
 **Table of contents**
 - [Installation](#installation)
 - [Usage](#usage)

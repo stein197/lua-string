@@ -1,3 +1,5 @@
+-- TODO: Replace comments with doc ones
+-- TODO: Add tests for __mul(), __call(), __index() and __newindex() functions
 local boolvalues = {
 	["1"] = "0";
 	["true"] = "false";
@@ -11,6 +13,7 @@ local eschars = {
 local escregexchars = {
 	"(", ")", ".", "%", "+", "-", "*", "?", "[", "]", "^", "$"
 }
+local mt = getmetatable("")
 
 local function includes(tbl, item)
 	for k, v in pairs(tbl) do
@@ -19,6 +22,30 @@ local function includes(tbl, item)
 		end
 	end
 	return false
+end
+
+--- Overloads `*` operator. Works the same as `string.rep()` function.
+function mt:__mul(n)
+	if type(self) == "number" then
+		return n * self
+	end
+	if type(n) ~= "number" then
+		error(string.format("attempt to mul a '%1' with a 'string'", type(n)))
+	end
+	return self:rep(n)
+end
+
+--- Overloads `()` operator. Works the same as `string.iter()` function.
+function mt:__call()
+	return self:iter()
+end
+
+-- TODO
+function mt:__index(i)
+end
+
+-- TODO
+function mt:__newindex(i, ch)
 end
 
 -- Splits string by supplied separator. If the `regex` parameter is set to true then the separator is considered as a regular expression
