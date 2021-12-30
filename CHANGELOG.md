@@ -3,7 +3,7 @@
 
 ## [1.2.0](../../compare/1.1.0..1.2.0) - XXXX-XX-XX
 ### Added
-- Metamethods `__mul()`, `__index()` and `__newindex()`
+- `__mul()` and `__index()` metamethods
 ### Changed
 - Replaced comments in source code with doc ones
 
@@ -12,7 +12,7 @@
 - `escpattern` and `unescpattern` to replace existing `escregex` and `unescregex` since term "pattern" fits more than "regex" in Lua
 
 ### Deprecated
-- `escregex` and `unescregex`
+- `escregex` and `unescregex` methods
 
 ## [1.0.0](../../tree/1.0.0) - 2021-11-27
 Release

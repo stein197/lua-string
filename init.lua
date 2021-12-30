@@ -1,5 +1,4 @@
 -- TODO: Replace comments with doc ones
--- TODO: Add tests for __mul(), __call(), __index() and __newindex() functions
 local boolvalues = {
 	["1"] = "0";
 	["true"] = "false";
@@ -48,10 +47,6 @@ function mt:__index(i)
 	i = i < 0 and #self + i + 1 or i
 	local rs = self:sub(i, i)
 	return #rs > 0 and rs or nil
-end
-
--- TODO
-function mt:__newindex(i, ch)
 end
 
 -- Splits string by supplied separator. If the `regex` parameter is set to true then the separator is considered as a regular expression
