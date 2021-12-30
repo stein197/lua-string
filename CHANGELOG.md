@@ -5,7 +5,7 @@
 ### Added
 - `__mul()` and `__index()` metamethods
 ### Changed
-- Replaced comments in source code with doc ones
+- Replaced comments in source code with more detailed doc ones
 
 ## [1.1.0](../../compare/1.0.0..1.1.0) - 2021-12-01
 ### Added

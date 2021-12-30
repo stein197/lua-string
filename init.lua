@@ -1,4 +1,3 @@
--- TODO: Replace comments with doc ones
 local boolvalues = {
 	["1"] = "0";
 	["true"] = "false";
@@ -49,59 +48,78 @@ function mt:__index(i)
 	return #rs > 0 and rs or nil
 end
 
---- Splits string by supplied separator. If the `pattern` parameter is set to true then the separator is considered as a
---- regular expression
+--- Splits the string by supplied separator. If the `pattern` parameter is set to true then the separator is considered
+--- as a regular expression.
 --- @param sep string Separator by which separate the string.
---- @param pattern boolean `true` for separator to be considered as a pattern.
+--- @param pattern? boolean `true` for separator to be considered as a pattern. `false` by default.
+--- @return string[] t Table of substrings separated by `sep` string.
 function string:split(sep, pattern)
 	if sep == "" then
 		return self:totable()
 	end
-	local result = {}
+	local rs = {}
 	local previdx = 1
 	while true do
 		local startidx, endidx = self:find(sep, previdx, not pattern)
 		if not startidx then
-			table.insert(result, self:sub(previdx))
+			table.insert(rs, self:sub(previdx))
 			break
 		end
-		table.insert(result, self:sub(previdx, startidx - 1))
+		table.insert(rs, self:sub(previdx, startidx - 1))
 		previdx = endidx + 1
 	end
-	return result
+	return rs
 end
 
--- Trims string's characters from its endings. Trims whitespaces by default. The `chars` argument is a regex string containing which characters to trim
+--- Trims string's characters from its endings. Trims whitespaces by default. The `chars` argument is a regex string
+--- containing which characters to trim.
+--- @param chars? string Pattern that represents which characters to trim from the ends. Whitespaces by default.
+--- @return string s String with trimmed characters on both sides.
 function string:trim(chars)
 	chars = chars or "%s"
 	return self:trimstart(chars):trimend(chars)
 end
 
--- Trims string's characters from its left side. Trims whitespaces by default. The `chars` argument is a regex string containing which characters to trim
+--- Trims string's characters from its left side. Trims whitespaces by default. The `chars` argument is a regex string
+--- containing which characters to trim
+--- @param chars? string Pattern that represents which characters to trim from the start. Whitespaces by default.
+--- @return string s String with trimmed characters at the start.
 function string:trimstart(chars)
 	return self:gsub("^["..(chars or "%s").."]+", "")
 end
 
--- Trims string's characters from its right side. Trims whitespaces by default. The `chars` argument is a regex string containing which characters to trim
+--- Trims string's characters from its right side. Trims whitespaces by default. The `chars` argument is a regex string
+--- containing which characters to trim.
+--- @param chars? string Pattern that represents Which characters to trim from the end. Whitespaces by default.
+--- @return string s String with trimmed characters at the end.
 function string:trimend(chars)
 	return self:gsub("["..(chars or "%s").."]+$", "")
 end
 
--- Pads string at the start with specified string until specified length. " " pad string by default
+--- Pads the string at the start with specified string until specified length.
+--- @param len number To which length pad the string.
+--- @param str? string String to pad the string with. " " by default
+--- @return string s Padded string or the string itself if this parameter is less than string's length.
 function string:padstart(len, str)
 	str = str or " "
 	local selflen = self:len()
 	return (str:rep(math.ceil((len - selflen) / str:len()))..self):sub(-(selflen < len and len or selflen))
 end
 
--- Pads string at the end with specified string until specified length. " " pad string by default
+--- Pads the string at the end with specified string until specified length.
+--- @param len number To which length pad the string.
+--- @param str? string String to pad the string with. " " by default
+--- @return string s Padded string or the string itself if this parameter is less than string's length.
 function string:padend(len, str)
 	str = str or " "
 	local selflen = self:len()
 	return (self..str:rep(math.ceil((len - selflen) / str:len()))):sub(1, selflen < len and len or selflen)
 end
 
--- If the string starts with specified prefix then returns string itself, otherwise pads the string until it starts with the prefix
+--- If the string starts with specified prefix then returns string itself, otherwise pads the string until it starts
+--- with the prefix.
+--- @param prefix string String to ensure this string starts with.
+--- @return string s String that starts with specified prefix.
 function string:ensurestart(prefix)
 	local prefixlen = prefix:len()
 	if prefixlen > self:len() then
@@ -116,7 +134,10 @@ function string:ensurestart(prefix)
 	return prefix:sub(1, i - 1)..self
 end
 
--- If the string ends with specified prefix then returns string itself, otherwise pads the string until it ends with the prefix
+--- If the string ends with specified suffix then returns string itself, otherwise pads the string until it ends with
+--- the suffix.
+--- @param suffix string String to ensure this string ends with.
+--- @return string s String that ends with specified prefix.
 function string:ensureend(suffix)
 	local suffixlen = suffix:len()
 	if suffixlen > self:len() then
@@ -131,58 +152,68 @@ function string:ensureend(suffix)
 	return self..suffix:sub(i + 1)
 end
 
--- Adds backslashes before ", ' and \ characters. Escape character can be specified ("\\" by default) as well as characters to escape ({"\"", "'", "\\"} by default)
+--- Adds backslashes before `"`, `'` and `\` characters.
+--- @param eschar? string Escape character. `\` by default.
+--- @param eschartbl? string[] Characters to escape. `{"\"", "'", "\\"}` by default.
+--- @return string s String with escaped characters.
 function string:esc(eschar, eschartbl)
-	local result = ""
+	local s = ""
 	eschar = eschar or "\\"
 	eschartbl = eschartbl or eschars
 	for char in self:iter() do
-		result = includes(eschartbl, char) and result..eschar..char or result..char
+		s = includes(eschartbl, char) and s..eschar..char or s..char
 	end
-	return result
+	return s
 end
 
--- Strips backslashes from the string. Escape character can be specified ("\\" by default)
+--- Strips backslashes from the string.
+--- @param eschar? string Escape character. `\` by default.
+--- @return string s Unescaped string with stripped escape character.
 function string:unesc(eschar)
-	local result = ""
+	local s = ""
 	local i = 0
 	eschar = eschar or "\\"
 	while i <= #self do
 		local char = self:sub(i, i)
 		if char == eschar then
 			i = i + 1
-			result = result..self:sub(i, i)
+			s = s..self:sub(i, i)
 		else
-			result = result..char
+			s = s..char
 		end
 		i = i + 1
 	end
-	return result
+	return s
 end
 
--- Escapes pattern special characters so the can be used in pattern matching functions as is
+--- Escapes pattern special characters so the string can be used in pattern matching functions as is.
+--- @return string s String with escaped pattern special characters.
 function string:escpattern()
 	return self:esc("%", escregexchars)
 end
 
--- Unescapes pattern special characters
+--- Unescapes pattern special characters.
+--- @return string s Unescaped string with stripped pattern `%` escape character.
 function string:unescpattern()
 	return self:unesc("%")
 end
 
--- Escapes regexp special characters so the can be used in regexp functions as is
+--- Escapes pattern special characters so the string can be used in pattern matching functions as is.
+--- @return string s String with escaped pattern special characters.
 --- @deprecated
 function string:escregex()
 	return self:esc("%", escregexchars)
 end
 
--- Unescapes regexp special characters
+--- Unescapes pattern special characters.
+--- @return string s Unescaped string with stripped pattern `%` escape character.
 --- @deprecated
 function string:unescregex()
 	return self:unesc("%")
 end
 
---- Returns an iterator which can be used in for loops
+--- Returns an iterator which can be used in `for ... in` loops.
+--- @return fun(): string f Iterator.
 function string:iter()
 	local i = 0
 	return function ()
@@ -191,7 +222,10 @@ function string:iter()
 	end
 end
 
---- Truncates string to a specified length with optional suffix (usually "...", nil by default)
+--- Truncates string to a specified length with optional suffix.
+--- @param len number Length to which truncate the string.
+--- @param suffix? string Optional string that will be added at the end.
+--- @return string s Truncated string.
 function string:truncate(len, suffix)
 	if suffix then
 		local newlen = len - suffix:len()
@@ -201,27 +235,34 @@ function string:truncate(len, suffix)
 	end
 end
 
--- Returns true if the string starts with specified string
+--- Returns true if the string starts with specified string.
+--- @param prefix string String to test that this string starts with.
+--- @return boolean b `true` if the string starts with the specified prefix.
 function string:startswith(prefix)
 	return self:sub(0, prefix:len()) == prefix
 end
 
--- Returns true if the string ends with specified string
+--- Returns true if the string ends with specified string.
+--- @param suffix string String to test that this string ends with.
+--- @return boolean b `true` if the string ends with the specified suffix.
 function string:endswith(suffix)
 	return self:sub(self:len() - suffix:len() + 1) == suffix
 end
 
--- Returns true if string's length is 0
+--- Checks if the string is empty.
+--- @return boolean b `true` if the string's length is 0.
 function string:isempty()
 	return self:len() == 0
 end
 
--- Returns true if string consists of whitespace characters
+--- Checks if the string consists of whitespace characters.
+--- @return boolean b `true` if the string consists of whitespaces or it's empty.
 function string:isblank()
 	return self:match("^%s*$") ~= nil
 end
 
--- Converts "1", "true", "on", "yes", "y" and their contraries into real boolean. Returns nil if casting cannot be done. Case-insensetive
+--- Converts "1", "true", "on", "yes", "y" and their contraries into real boolean. Case-insensetive.
+--- @return boolean | nil b Boolean corresponding to the string or nil if casting cannot be done.
 function string:tobool()
 	local lowered = self:lower()
 	for truthy, falsy in pairs(boolvalues) do
@@ -234,7 +275,8 @@ function string:tobool()
 	return nil
 end
 
--- Returns table containing all the chars in the string
+--- Returns table containing all the chars in the string.
+--- @return string[] t Table that consists of the string's characters.
 function string:totable()
 	local result = {}
 	for ch in self:iter() do
