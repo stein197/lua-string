@@ -49,15 +49,18 @@ function mt:__index(i)
 	return #rs > 0 and rs or nil
 end
 
--- Splits string by supplied separator. If the `regex` parameter is set to true then the separator is considered as a regular expression
-function string:split(sep, regex)
+--- Splits string by supplied separator. If the `pattern` parameter is set to true then the separator is considered as a
+--- regular expression
+--- @param sep string Separator by which separate the string.
+--- @param pattern boolean `true` for separator to be considered as a pattern.
+function string:split(sep, pattern)
 	if sep == "" then
 		return self:totable()
 	end
 	local result = {}
 	local previdx = 1
 	while true do
-		local startidx, endidx = self:find(sep, previdx, not regex)
+		local startidx, endidx = self:find(sep, previdx, not pattern)
 		if not startidx then
 			table.insert(result, self:sub(previdx))
 			break

@@ -54,8 +54,8 @@ require "lua-string" -- It will extend the default string library
 
 <a id="split"></a>
 
-### split(self, sep, regex)
-Splits string by supplied separator. If the `regex` parameter is set to true then the separator is considered as a regular expression
+### split(self, sep, pattern)
+Splits string by supplied separator. If the `pattern` parameter is set to true then the separator is considered as a regular expression
 ```lua
 ("a b c"):split(" ") -- {"a", "b", "c"}
 ("a,b, c"):split("%s*,%s*", true) -- {"a", "b", "c"}
