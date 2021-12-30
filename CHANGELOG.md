@@ -1,7 +1,7 @@
 # CHANGELOG
 ## Unreleased
 
-## [1.2.0](../../compare/1.1.0..1.2.0) - XXXX-XX-XX
+## [1.2.0](../../compare/1.1.0..1.2.0) - 2021-12-30
 ### Added
 - `__mul()` and `__index()` metamethods
 ### Changed
