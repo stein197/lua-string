@@ -72,7 +72,7 @@ Overloads `[]` operator. It's possible to access individual chars with this oper
 <a id="split"></a>
 
 ### split(sep, pattern)
-Splits string by supplied separator. If the `pattern` parameter is set to true then the separator is considered as a regular expression
+Splits string by supplied separator. If the `pattern` parameter is set to true then the separator is considered as a pattern
 ```lua
 ("a b c"):split(" ") -- {"a", "b", "c"}
 ("a,b, c"):split("%s*,%s*", true) -- {"a", "b", "c"}
@@ -81,7 +81,7 @@ Splits string by supplied separator. If the `pattern` parameter is set to true t
 <a id="trim"></a>
 
 ### trim(chars)
-Trims string's characters from its endings. Trims whitespaces by default. The `chars` argument is a regex string containing which characters to trim
+Trims string's characters from its endings. Trims whitespaces by default. The `chars` argument is a pattern string containing which characters to trim
 ```lua
 (" abc "):trim() -- "abc"
 (" abc !"):trim("! ") -- "abc"
@@ -90,7 +90,7 @@ Trims string's characters from its endings. Trims whitespaces by default. The `c
 <a id="trimstart"></a>
 
 ### trimstart(chars)
-Trims string's characters from its left side. Trims whitespaces by default. The `chars` argument is a regex string containing which characters to trim
+Trims string's characters from its left side. Trims whitespaces by default. The `chars` argument is a pattern string containing which characters to trim
 ```lua
 (" abc "):trimstart() -- "abc "
 (" abc !"):trimstart("! ") -- "abc !"
@@ -99,7 +99,7 @@ Trims string's characters from its left side. Trims whitespaces by default. The 
 <a id="trimend"></a>
 
 ### trimend(chars)
-Trims string's characters from its right side. Trims whitespaces by default. The `chars` argument is a regex string containing which characters to trim
+Trims string's characters from its right side. Trims whitespaces by default. The `chars` argument is a pattern string containing which characters to trim
 ```lua
 (" abc "):trimend() -- " abc"
 (" abc !"):trimend("! ") -- " abc"
@@ -178,7 +178,7 @@ Unescapes pattern special characters
 <a id="escregex"></a>
 
 ### escregex(self)
-Escapes regexp special characters so the can be used in regexp functions as is. Deprecated, use `escpattern` instead
+Escapes pattern special characters so the can be used in pattern functions as is. Deprecated, use `escpattern` instead
 ```lua
 ("^[abc]"):escregex() -- "%^%[abc%]"
 ```
@@ -186,7 +186,7 @@ Escapes regexp special characters so the can be used in regexp functions as is. 
 <a id="unescregex"></a>
 
 ### unescregex(self)
-Unescapes regexp special characters. Deprecated, use `unescpattern` instead
+Unescapes pattern special characters. Deprecated, use `unescpattern` instead
 ```lua
 ("%^%[abc%]"):unescregex() -- "^[abc]"
 ```

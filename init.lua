@@ -49,7 +49,7 @@ function mt:__index(i)
 end
 
 --- Splits the string by supplied separator. If the `pattern` parameter is set to true then the separator is considered
---- as a regular expression.
+--- as a pattern.
 --- @param sep string Separator by which separate the string.
 --- @param pattern? boolean `true` for separator to be considered as a pattern. `false` by default.
 --- @return string[] t Table of substrings separated by `sep` string.
@@ -71,7 +71,7 @@ function string:split(sep, pattern)
 	return rs
 end
 
---- Trims string's characters from its endings. Trims whitespaces by default. The `chars` argument is a regex string
+--- Trims string's characters from its endings. Trims whitespaces by default. The `chars` argument is a pattern
 --- containing which characters to trim.
 --- @param chars? string Pattern that represents which characters to trim from the ends. Whitespaces by default.
 --- @return string s String with trimmed characters on both sides.
@@ -80,7 +80,7 @@ function string:trim(chars)
 	return self:trimstart(chars):trimend(chars)
 end
 
---- Trims string's characters from its left side. Trims whitespaces by default. The `chars` argument is a regex string
+--- Trims string's characters from its left side. Trims whitespaces by default. The `chars` argument is a pattern string
 --- containing which characters to trim
 --- @param chars? string Pattern that represents which characters to trim from the start. Whitespaces by default.
 --- @return string s String with trimmed characters at the start.
@@ -88,8 +88,8 @@ function string:trimstart(chars)
 	return self:gsub("^["..(chars or "%s").."]+", "")
 end
 
---- Trims string's characters from its right side. Trims whitespaces by default. The `chars` argument is a regex string
---- containing which characters to trim.
+--- Trims string's characters from its right side. Trims whitespaces by default. The `chars` argument is a pattern
+--- string containing which characters to trim.
 --- @param chars? string Pattern that represents Which characters to trim from the end. Whitespaces by default.
 --- @return string s String with trimmed characters at the end.
 function string:trimend(chars)

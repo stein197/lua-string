@@ -102,23 +102,23 @@ TestString = {
 		ae(("--"):split("-"), {"", "", ""})
 	end;
 	
-	["test: split(): Regex: Splitting empty string with empty one returns empty table"] = function()
+	["test: split(): Pattern: Splitting empty string with empty one returns empty table"] = function()
 		ae(empty:split(empty, true), {})
 	end;
 	
-	["test: split(): Regex: Splitting by empty string returns table of chars"] = function ()
+	["test: split(): Pattern: Splitting by empty string returns table of chars"] = function ()
 		ae(abc:split(empty, true), {"a", "b", "c"})
 	end;
 	
-	["test: split(): Regex: Default"] = function ()
+	["test: split(): Pattern: Default"] = function ()
 		ae(("a b c"):split("%s", true), {"a", "b", "c"})
 	end;
 	
-	["test: split(): Regex: Splitting by multicharacter string"] = function ()
+	["test: split(): Pattern: Splitting by multicharacter string"] = function ()
 		ae(("a, b,c"):split("%s*,%s*", true), {"a", "b", "c"})
 	end;
 	
-	["test: split(): Regex: Splitting repeating separators results in empty strings"] = function ()
+	["test: split(): Pattern: Splitting repeating separators results in empty strings"] = function ()
 		ae(("a-b--c"):split("%-+", true), {"a", "b", "c"})
 	end;
 
@@ -307,7 +307,7 @@ TestString = {
 		ae(empty:esc(), "")
 	end;
 
-	["test: esc(): Escaping regular string returns the string itself"] = function ()
+	["test: esc(): Escaping pattern string returns the string itself"] = function ()
 		ae(abc:esc(), "abc")
 	end;
 
@@ -328,7 +328,7 @@ TestString = {
 		ae(empty:unesc(), "")
 	end;
 
-	["test: unesc(): Unescaping regular string returns the string itself"] = function ()
+	["test: unesc(): Unescaping pattern string returns the string itself"] = function ()
 		ae(abc:unesc(), "abc")
 	end;
 
