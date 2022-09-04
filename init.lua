@@ -215,11 +215,7 @@ end
 --- Returns an iterator which can be used in `for ... in` loops.
 --- @return fun(): string f Iterator.
 function string:iter()
-	local i = 0
-	return function ()
-		i = i + 1
-		return i <= self:len() and self:sub(i, i) or nil
-	end
+	return self:gmatch(".")
 end
 
 --- Truncates string to a specified length with optional suffix.
