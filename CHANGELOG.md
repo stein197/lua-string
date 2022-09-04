@@ -1,6 +1,10 @@
 # CHANGELOG
 ## Unreleased
 
+## [1.2.1](../../compare/1.2.0..1.2.1) - 2022-09-04
+### Changed
+- Simplified `iter()` method implementation
+
 ## [1.2.0](../../compare/1.1.0..1.2.0) - 2021-12-30
 ### Added
 - `__mul()` and `__index()` metamethods

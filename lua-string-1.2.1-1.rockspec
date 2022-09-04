@@ -1,9 +1,9 @@
 package = "lua-string"
 rockspec_format = "3.0"
-version = "1.2.0-1"
+version = "1.2.1-1"
 source = {
 	url = "git://github.com/stein197/lua-string",
-	tag = "1.2.0",
+	tag = "1.2.1",
 	branch = "main"
 }
 description = {
