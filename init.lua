@@ -38,7 +38,7 @@ end
 --- Overloads `[]` operator. It's possible to access individual chars with this operator. Index could be negative. In
 --- that case the counting will start from the end.
 --- @param i number Index at which retrieve a char.
---- @return string ch Single character at specified index. Nil if the index is larger than length of the string.
+--- @return string|nil ch Single character at specified index. Nil if the index is larger than length of the string.
 function mt:__index(i)
 	if string[i] then
 		return string[i]
